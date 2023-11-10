@@ -1,10 +1,9 @@
 package christmas;
 
+import christmas.exception.menu.DuplicateMenuException;
 import christmas.exception.menu.MenuFormatException;
-import christmas.validator.InputValidator;
-import org.junit.jupiter.api.BeforeEach;
+import christmas.validator.MenuValidator;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -17,10 +16,18 @@ public class MenuTest {
     @ValueSource(strings = {"초코케이크-a1,바비큐립-2",
             "초코케이크--1,바비큐립-2","케이크-1&바비큐립-2",
             "케이크1,바비큐립-2","케이크:1,바비큐립-2",
-            "초코케이크-1, 바비큐립-2"
+            "초코케이크-1, 바비큐립-1"
     })
     void 메뉴_형식_테스트(String strings){
-        assertThatThrownBy(() -> InputValidator.validateMenuFormat(strings))
+        assertThatThrownBy(() -> MenuValidator.validateMenuFormat(strings))
                 .isInstanceOf(MenuFormatException.class);
+    }
+
+    @DisplayName("중복 메뉴가 존재할 때 예외 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"초코케이크-1,바비큐립-2,초코케이크-3"})
+    void 메뉴_중복_테스트(String strings){
+        assertThatThrownBy(() -> MenuValidator.validateDuplicateMenu(strings))
+                .isInstanceOf(DuplicateMenuException.class);
     }
 }
