@@ -1,6 +1,7 @@
 package christmas;
 
 import christmas.exception.menu.DuplicateMenuException;
+import christmas.exception.menu.MenuCountZeroException;
 import christmas.exception.menu.MenuFormatException;
 import christmas.validator.MenuValidator;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +20,7 @@ public class MenuTest {
             "초코케이크-1, 바비큐립-1"
     })
     void 메뉴_형식_테스트(String strings){
-        assertThatThrownBy(() -> MenuValidator.validateMenuFormat(strings))
+        assertThatThrownBy(() -> MenuValidator.validateMenuInput(strings))
                 .isInstanceOf(MenuFormatException.class);
     }
 
@@ -27,7 +28,15 @@ public class MenuTest {
     @ParameterizedTest
     @ValueSource(strings = {"초코케이크-1,바비큐립-2,초코케이크-3"})
     void 메뉴_중복_테스트(String strings){
-        assertThatThrownBy(() -> MenuValidator.validateDuplicateMenu(strings))
+        assertThatThrownBy(() -> MenuValidator.validateMenuInput(strings))
                 .isInstanceOf(DuplicateMenuException.class);
+    }
+
+    @DisplayName("메뉴 수량에 0이 존재할 때 예외 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"초코케이크-0,바비큐립-2","초코케이크-0"})
+    void 메뉴_수량_0_테스트(String strings){
+        assertThatThrownBy(() -> MenuValidator.validateMenuInput(strings))
+                .isInstanceOf(MenuCountZeroException.class);
     }
 }
