@@ -1,9 +1,9 @@
 package christmas.view;
 
 import static christmas.view.ViewMessage.AMOUNT_BEFORE_DISCOUNT;
+import static christmas.view.ViewMessage.GIFT_EVENT;
 import static christmas.view.ViewMessage.ORDERED_MENU;
 
-import christmas.util.Parser;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -11,6 +11,8 @@ import java.util.stream.Collectors;
 public class OutputView {
     private final String QUANTITY_SUFFIX = "개";
     private final String MONEY_SUFFIX = "원";
+    private final String CHAMPAIGN_GIFT = "샴페인 1개";
+    private final String NO_GIFT = "없음";
 
     public void displayEventMessage(int date) {
         String formattedMessage = String.format(ViewMessage.EVENT.getMessage(), date);
@@ -30,7 +32,16 @@ public class OutputView {
         System.out.println(AMOUNT_BEFORE_DISCOUNT.getMessage());
         System.out.println(formattedAmount + MONEY_SUFFIX);
     }
+
+    public void displayGiftEvent(boolean canGetGift) {
+        System.out.println(GIFT_EVENT);
+        if (canGetGift) {
+            System.out.println(CHAMPAIGN_GIFT);
+        }
+        System.out.println(NO_GIFT);
+    }
     
+
     private String formatMoney(int amount) {
         return String.format(Locale.US, "%,d", amount);
     }
