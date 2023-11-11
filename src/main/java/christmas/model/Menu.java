@@ -1,5 +1,8 @@
 package christmas.model;
 
+import java.util.Arrays;
+import java.util.Optional;
+
 public enum Menu {
     SOUP("애피타이저","양송이수프",6000),
     TAPAS("애피타이저","타파스",8000),
@@ -21,6 +24,13 @@ public enum Menu {
         this.category = category;
         this.name = name;
         this.price = price;
+    }
+
+    public static Menu of(String name) {
+        return Arrays.stream(Menu.values())
+                .filter(menu -> menu.getName().equals(name))
+                .findFirst()
+                .orElse(null);
     }
 
     public String getCategory(){

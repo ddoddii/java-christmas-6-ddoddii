@@ -13,6 +13,12 @@ public class MenuCount {
         this.menuCount = calculateMenuCount(parsedMenu);
     }
 
+    public int getTotalAmount(){
+        return menuCount.entrySet().stream()
+                .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
+                .sum();
+    }
+
     private EnumMap<Menu, Integer> calculateMenuCount(Map<String, Integer> parsedMenu) {
         EnumMap<Menu, Integer> menuCount = new EnumMap<>(Menu.class);
         parsedMenu.forEach((menuName, count) -> {
