@@ -13,7 +13,7 @@ public class MenuCount {
         this.menuCount = calculateMenuCount(parsedMenu);
     }
 
-    public int getTotalAmount(){
+    public int calculateTotalAmount(){
         return menuCount.entrySet().stream()
                 .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
                 .sum();

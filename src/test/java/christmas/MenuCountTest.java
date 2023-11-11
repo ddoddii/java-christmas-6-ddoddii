@@ -17,6 +17,6 @@ public class MenuCountTest {
         //when
         MenuCount menuCount = new MenuCount(parsedMenu);
         //then
-        Assertions.assertThat(menuCount.getTotalAmount()).isEqualTo(142000);
+        Assertions.assertThat(menuCount.calculateTotalAmount()).isEqualTo(142000);
     }
 }
