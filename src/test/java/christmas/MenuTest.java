@@ -1,6 +1,7 @@
 package christmas;
 
 import christmas.exception.menu.DuplicateMenuException;
+import christmas.exception.menu.MenuAmoutOverLimitException;
 import christmas.exception.menu.MenuCountZeroException;
 import christmas.exception.menu.MenuFormatException;
 import christmas.exception.menu.MenuNotFoundException;
@@ -60,5 +61,14 @@ public class MenuTest {
         Map<String,Integer> parsedMenu = Parser.parseMenuCount(strings);
         assertThatThrownBy(() -> MenuValidator.validateMenuLogic(parsedMenu))
                 .isInstanceOf(OnlyDrinkException.class);
+    }
+
+    @DisplayName("총 주문 수량이 20개 초과일 시 예외 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"레드와인-17,바비큐립-4","초코케이크-21"})
+    void 주문수량_20초과_테스트(String strings){
+        Map<String,Integer> parsedMenu = Parser.parseMenuCount(strings);
+        assertThatThrownBy(() -> MenuValidator.validateMenuLogic(parsedMenu))
+                .isInstanceOf(MenuAmoutOverLimitException.class);
     }
 }

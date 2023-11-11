@@ -1,6 +1,7 @@
 package christmas.validator;
 
 import christmas.exception.menu.DuplicateMenuException;
+import christmas.exception.menu.MenuAmoutOverLimitException;
 import christmas.exception.menu.MenuCountZeroException;
 import christmas.exception.menu.MenuFormatException;
 import christmas.exception.menu.MenuNotFoundException;
@@ -12,6 +13,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class MenuValidator {
+    private static final int MAX_MENU_AMOUNT = 20;
 
     public static void validateMenuInput(String input) {
         validateMenuFormat(input);
@@ -22,6 +24,7 @@ public class MenuValidator {
     public static void validateMenuLogic(Map<String, Integer> parsedMenu) {
         validateExistingMenu(parsedMenu);
         validateNotOnlyDrink(parsedMenu);
+        validateAmountNotOverLimit(parsedMenu);
     }
 
     /*
@@ -73,8 +76,15 @@ public class MenuValidator {
         if (onlyDrinks) {
             throw new OnlyDrinkException();
         }
-
     }
 
+    private static void validateAmountNotOverLimit(Map<String, Integer> parsedMenu){
+        int totalAmount = parsedMenu.values().stream()
+                .mapToInt(Integer::intValue)
+                .sum();
+        if (totalAmount > MAX_MENU_AMOUNT){
+            throw new MenuAmoutOverLimitException();
+        }
+    }
 }
 
