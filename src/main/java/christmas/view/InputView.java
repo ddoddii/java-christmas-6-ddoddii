@@ -2,29 +2,29 @@ package christmas.view;
 
 import camp.nextstep.edu.missionutils.Console;
 import christmas.util.Parser;
-import christmas.validator.InputValidator;
+import christmas.validator.MenuValidator;
+import java.sql.SQLOutput;
 
 public class InputView {
-    private final String GREETING_MESSAGE = "안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.";
-
-    private final String DATE_MESSAGE = "12월 중 식당 예상 방문 날짜는 언제인가요? (숫자만 입력해 주세요!)";
-    private final String MENU_MESSAGE = "주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)";
+    private final String DATE_EVENT_MESSAGE = "12월 %d에 우테코 식당에서 받을 이벤트 혜택 미리 보기!";
 
     public void printGreetingMessage() {
-        System.out.println(GREETING_MESSAGE);
+        System.out.println(ViewMessage.GREETING.getMessage());
     }
 
     public int readDate() {
-        System.out.println(DATE_MESSAGE);
+        System.out.println(ViewMessage.DATE.getMessage());
         String input = Console.readLine();
         return Parser.parseDate(input);
     }
 
-    public String readMenuCount(){
-        System.out.println(MENU_MESSAGE);
+    public String readMenuCount() {
+        System.out.println(ViewMessage.MENU.getMessage());
         String input = Console.readLine();
-        InputValidator.validateMenuFormat(input);
+        MenuValidator.validateMenuInputFormat(input);
         return input;
     }
+
+
 
 }
