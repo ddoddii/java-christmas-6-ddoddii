@@ -75,7 +75,7 @@ public class DiscountTest {
         Assertions.assertThat(discountService.giftEventDiscount(menuCount)).isEqualTo(25000);
     }
 
-    @DisplayName("총 할인금액 계산 테스트")
+    @DisplayName("총할인 금액을 계산한다.")
     @Test
     void  총할인_계산_테스트(){
         //given
@@ -85,6 +85,18 @@ public class DiscountTest {
         // when & then
         Assertions.assertThat(discountService.calculateTotalDiscountAmount(menuCount,date))
                 .isEqualTo(6246);
+    }
+
+    @DisplayName("총혜택 금액을 계산한다.")
+    @Test
+    void  총혜택_계산_테스트(){
+        //given
+        Date date = Date.of(3);
+        String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
+        MenuCount menuCount = new MenuCount(Parser.parseMenuCount(input));
+        // when & then
+        Assertions.assertThat(discountService.calculatePromotionAmount(menuCount,date))
+                .isEqualTo(31246);
     }
 
 

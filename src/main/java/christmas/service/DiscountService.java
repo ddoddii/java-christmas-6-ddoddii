@@ -16,6 +16,10 @@ public class DiscountService {
         return menuCount.calculateTotalAmount() >= MIN_DISCOUNT_SERVICE_AMOUNT;
     }
 
+    public int calculatePromotionAmount(MenuCount menuCount, Date date){
+        return calculateTotalDiscountAmount(menuCount,date)
+                + giftEventDiscount(menuCount);
+    }
 
     public int calculateTotalDiscountAmount(MenuCount menuCount, Date date){
         return christmasDiscount(date)
