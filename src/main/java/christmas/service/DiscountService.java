@@ -16,6 +16,14 @@ public class DiscountService {
         return menuCount.calculateTotalAmount() >= MIN_DISCOUNT_SERVICE_AMOUNT;
     }
 
+
+    public int calculateTotalDiscountAmount(MenuCount menuCount, Date date){
+        return christmasDiscount(date)
+                + weekdayDiscount(menuCount,date)
+                + specialDayDiscount(date)
+                + weekendDiscount(menuCount, date);
+    }
+
     public int christmasDiscount(Date date) {
         if (date.isBeforeXmas()) {
             return (START_XMAS_DISCOUNT_AMOUNT + (date.getValue() - 1) * INCREASING_AMOUNT);
