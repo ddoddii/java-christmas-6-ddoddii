@@ -17,7 +17,7 @@ public class MenuValidator {
 
 
     //메뉴 입력 형식 검증
-    public static void validateMenuInput(String input) {
+    public static void validateMenuInputFormat(String input) {
         validateMenuFormat(input);
         validateMenuAmount(input);
         validateDuplicateMenu(input);
@@ -30,9 +30,8 @@ public class MenuValidator {
         validateAmountNotOverLimit(parsedMenu);
     }
 
-    /*
-    메뉴 형식 {메뉴이름}-{메뉴수량} 에 맞지 않을 시 예외 발생
-     */
+
+    //메뉴 형식 {메뉴이름}-{메뉴수량} 에 맞지 않을 시 예외 발생
     private static void validateMenuFormat(String input) {
         String pattern = "([가-힣a-zA-Z]+-\\d+)(,[가-힣a-zA-Z]+-\\d+)*";
 

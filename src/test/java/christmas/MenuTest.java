@@ -25,7 +25,7 @@ public class MenuTest {
             "초코케이크-1, 바비큐립-1"
     })
     void 메뉴_형식_테스트(String strings){
-        assertThatThrownBy(() -> MenuValidator.validateMenuInput(strings))
+        assertThatThrownBy(() -> MenuValidator.validateMenuInputFormat(strings))
                 .isInstanceOf(MenuFormatException.class);
     }
 
@@ -33,7 +33,7 @@ public class MenuTest {
     @ParameterizedTest
     @ValueSource(strings = {"초코케이크-1,바비큐립-2,초코케이크-3"})
     void 메뉴_중복_테스트(String strings){
-        assertThatThrownBy(() -> MenuValidator.validateMenuInput(strings))
+        assertThatThrownBy(() -> MenuValidator.validateMenuInputFormat(strings))
                 .isInstanceOf(DuplicateMenuException.class);
     }
 
@@ -41,7 +41,7 @@ public class MenuTest {
     @ParameterizedTest
     @ValueSource(strings = {"초코케이크-0,바비큐립-2","초코케이크-0"})
     void 메뉴_수량_0_테스트(String strings){
-        assertThatThrownBy(() -> MenuValidator.validateMenuInput(strings))
+        assertThatThrownBy(() -> MenuValidator.validateMenuInputFormat(strings))
                 .isInstanceOf(MenuCountZeroException.class);
     }
 
