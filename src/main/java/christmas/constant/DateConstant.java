@@ -17,6 +17,10 @@ public enum DateConstant {
             1, 2, 8, 9, 15, 16, 22, 23, 29, 30
     ));
 
+    private static final Set<Integer> SPECIAL_DAYS = new HashSet<>(Arrays.asList(
+            3, 10, 17, 24, 31
+    ));
+
     DateConstant(int date) {
         this.date = date;
     }
@@ -35,5 +39,9 @@ public enum DateConstant {
 
     public static boolean isBeforeXmas(int date) {
         return XMAS.date >= date;
+    }
+
+    public static boolean isSpecialDay(int date) {
+        return SPECIAL_DAYS.contains(date);
     }
 }

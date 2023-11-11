@@ -8,6 +8,7 @@ public class DiscountService {
     private final int INCREASING_AMOUNT = 100;
     private final int MIN_DISCOUNT_SERVICE_AMOUNT = 10000;
     private final int DISCOUNT_AMOUNT = 2023;
+    private final int SPECIAL_DAY_DISCOUNT = 1000;
 
     public boolean canGetDiscount(MenuCount menuCount){
         return menuCount.calculateTotalAmount() >= MIN_DISCOUNT_SERVICE_AMOUNT;
@@ -30,6 +31,13 @@ public class DiscountService {
     public int  weekdayDiscount(MenuCount menuCount, Date date){
         if (date.isWeekday()){
             return calculateWeekdayDiscountAmount(menuCount);
+        }
+        return 0;
+    }
+
+    public int specialDayDiscount(Date date){
+        if (date.isSpecialDate()){
+            return SPECIAL_DAY_DISCOUNT;
         }
         return 0;
     }

@@ -55,5 +55,14 @@ public class DiscountTest {
         Assertions.assertThat(discountService.weekdayDiscount(menuCount,date)).isEqualTo(4046);
     }
 
+    @DisplayName("특별한 날짜이면 총주문 금액에서 1000원 할인을 받는다.")
+    @Test
+    void  특별날짜_이벤트_테스트(){
+        //given
+        Date date = Date.of(3);
+        // when & then
+        Assertions.assertThat(discountService.specialDayDiscount(date)).isEqualTo(1000);
+    }
+
 
 }

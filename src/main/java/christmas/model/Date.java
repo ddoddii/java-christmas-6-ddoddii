@@ -13,11 +13,11 @@ public class Date {
         this.date = date;
     }
 
-    public static Date of(int date){
+    public static Date of(int date) {
         return new Date(date);
     }
 
-    public int getValue(){
+    public int getValue() {
         return date;
     }
 
@@ -27,16 +27,20 @@ public class Date {
         }
     }
 
-    public boolean isWeekday(){
+    public boolean isWeekday() {
         return DateConstant.isWeekday(date);
     }
 
-    public boolean isWeekend(){
+    public boolean isWeekend() {
         return DateConstant.isWeekend(date);
     }
 
-    public boolean isBeforeXmas(){
+    public boolean isBeforeXmas() {
         return DateConstant.isBeforeXmas(date);
+    }
+
+    public boolean isSpecialDate() {
+        return DateConstant.isSpecialDay(date);
     }
 
 }
