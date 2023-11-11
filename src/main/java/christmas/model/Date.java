@@ -17,6 +17,10 @@ public class Date {
         return new Date(date);
     }
 
+    public int getValue(){
+        return date;
+    }
+
     private void validateDateRange(int date) {
         if (date < MIN_DATE || date > MAX_DATE) {
             throw new DateRangeException();

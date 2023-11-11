@@ -19,6 +19,10 @@ public class MenuCount {
                 .sum();
     }
 
+    public EnumMap<Menu,Integer> getValue(){
+        return menuCount;
+    }
+
     private EnumMap<Menu, Integer> calculateMenuCount(Map<String, Integer> parsedMenu) {
         EnumMap<Menu, Integer> calculatedMenuCount = new EnumMap<>(Menu.class);
         parsedMenu.forEach((menuName, count) -> {
