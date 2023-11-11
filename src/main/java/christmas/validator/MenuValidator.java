@@ -15,12 +15,15 @@ import java.util.stream.Collectors;
 public class MenuValidator {
     private static final int MAX_MENU_AMOUNT = 20;
 
+
+    //메뉴 입력 형식 검증
     public static void validateMenuInput(String input) {
         validateMenuFormat(input);
         validateMenuAmount(input);
         validateDuplicateMenu(input);
     }
 
+    // 메뉴 로직 검증
     public static void validateMenuLogic(Map<String, Integer> parsedMenu) {
         validateExistingMenu(parsedMenu);
         validateNotOnlyDrink(parsedMenu);
