@@ -5,7 +5,8 @@ import java.util.Optional;
 
 public enum Menu {
     SOUP("애피타이저","양송이수프",6000),
-    TAPAS("애피타이저","타파스",8000),
+    TAPAS("애피타이저","타파스",5500),
+    SALAD("애피타이저","시저샐러드",8000),
     STEAK("메인","티본스테이크",55000),
     BBQ("메인","바비큐립",54000),
     SEAFOOD_PASTA("메인","해산물파스타",35000),
