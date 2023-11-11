@@ -4,6 +4,7 @@ import christmas.exception.menu.DuplicateMenuException;
 import christmas.exception.menu.MenuCountZeroException;
 import christmas.exception.menu.MenuFormatException;
 import christmas.exception.menu.MenuNotFoundException;
+import christmas.exception.menu.OnlyDrinkException;
 import christmas.util.Parser;
 import christmas.validator.MenuValidator;
 import java.util.Map;
@@ -50,5 +51,14 @@ public class MenuTest {
         Map<String,Integer> parsedMenu = Parser.parseMenuCount(strings);
         assertThatThrownBy(() -> MenuValidator.validateMenuLogic(parsedMenu))
                 .isInstanceOf(MenuNotFoundException.class);
+    }
+
+    @DisplayName("음료만 주문할 때 예외 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"제로콜라-4","레드와인-1,샴페인-3"})
+    void 음료만_주문_테스트(String strings){
+        Map<String,Integer> parsedMenu = Parser.parseMenuCount(strings);
+        assertThatThrownBy(() -> MenuValidator.validateMenuLogic(parsedMenu))
+                .isInstanceOf(OnlyDrinkException.class);
     }
 }

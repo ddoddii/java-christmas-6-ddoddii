@@ -4,8 +4,8 @@ import christmas.exception.menu.DuplicateMenuException;
 import christmas.exception.menu.MenuCountZeroException;
 import christmas.exception.menu.MenuFormatException;
 import christmas.exception.menu.MenuNotFoundException;
+import christmas.exception.menu.OnlyDrinkException;
 import christmas.model.Menu;
-import christmas.util.Parser;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
@@ -19,8 +19,9 @@ public class MenuValidator {
         validateDuplicateMenu(input);
     }
 
-    public static void validateMenuLogic(Map<String, Integer> parsedMenu){
+    public static void validateMenuLogic(Map<String, Integer> parsedMenu) {
         validateExistingMenu(parsedMenu);
+        validateNotOnlyDrink(parsedMenu);
     }
 
     /*
@@ -60,6 +61,19 @@ public class MenuValidator {
                 throw new MenuNotFoundException();
             }
         });
+    }
+
+    private static void validateNotOnlyDrink(Map<String, Integer> parsedMenu) {
+        boolean onlyDrinks = parsedMenu.keySet().stream()
+                .flatMap(menuName -> Arrays.stream(Menu.values())
+                        .filter(menu -> menu.getName().equals(menuName))
+                        .findFirst()
+                        .stream())
+                .allMatch(menu -> "음료".equals(menu.getCategory()));
+        if (onlyDrinks) {
+            throw new OnlyDrinkException();
+        }
+
     }
 
 }
