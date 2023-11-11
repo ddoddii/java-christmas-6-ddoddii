@@ -14,7 +14,7 @@ public enum Menu {
     ICECREAM("디저트","아이스크림",5000),
     ZEROCOKE("음료","제로콜라",3000),
     REDWINE("음료","레드와인",60000),
-    CHAMPAGNE("음료","샴페인",250000);
+    CHAMPAGNE("음료","샴페인",25000);
 
 
     private final String category;
