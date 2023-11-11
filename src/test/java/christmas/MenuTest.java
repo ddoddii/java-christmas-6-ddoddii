@@ -3,7 +3,10 @@ package christmas;
 import christmas.exception.menu.DuplicateMenuException;
 import christmas.exception.menu.MenuCountZeroException;
 import christmas.exception.menu.MenuFormatException;
+import christmas.exception.menu.MenuNotFoundException;
+import christmas.util.Parser;
 import christmas.validator.MenuValidator;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -38,5 +41,14 @@ public class MenuTest {
     void 메뉴_수량_0_테스트(String strings){
         assertThatThrownBy(() -> MenuValidator.validateMenuInput(strings))
                 .isInstanceOf(MenuCountZeroException.class);
+    }
+
+    @DisplayName("메뉴에 존재하는 주문이 있을 때 예외 발생")
+    @ParameterizedTest
+    @ValueSource(strings = {"바나나케이크-1,초코케이크-2","케이크-2,초코아이스크림-3"})
+    void 메뉴_존재하지_않음_테스트(String strings){
+        Map<String,Integer> parsedMenu = Parser.parseMenuCount(strings);
+        assertThatThrownBy(() -> MenuValidator.validateMenuLogic(parsedMenu))
+                .isInstanceOf(MenuNotFoundException.class);
     }
 }
