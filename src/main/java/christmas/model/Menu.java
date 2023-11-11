@@ -33,6 +33,10 @@ public enum Menu {
                 .orElse(null);
     }
 
+    public boolean isMainCategory(){
+        return "메인".equals(this.category);
+    }
+
     public String getCategory(){
         return category;
     }
