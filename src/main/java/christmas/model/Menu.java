@@ -37,6 +37,10 @@ public enum Menu {
         return "메인".equals(this.category);
     }
 
+    public boolean isDessertCategory(){
+        return "디저트".equals(this.category);
+    }
+
     public String getCategory(){
         return category;
     }
