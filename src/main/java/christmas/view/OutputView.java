@@ -3,6 +3,7 @@ package christmas.view;
 import static christmas.view.ViewMessage.AMOUNT_BEFORE_DISCOUNT;
 import static christmas.view.ViewMessage.GIFT_EVENT;
 import static christmas.view.ViewMessage.ORDERED_MENU;
+import static christmas.view.ViewMessage.PROMOTION;
 
 import java.util.Locale;
 import java.util.Map;
@@ -34,13 +35,19 @@ public class OutputView {
     }
 
     public void displayGiftEvent(boolean canGetGift) {
-        System.out.println(GIFT_EVENT);
+        System.out.println(GIFT_EVENT.getMessage());
         if (canGetGift) {
             System.out.println(CHAMPAIGN_GIFT);
+            return;
         }
         System.out.println(NO_GIFT);
+
     }
-    
+
+    public void displayPromotionStatus() {
+        System.out.println(PROMOTION);
+    }
+
 
     private String formatMoney(int amount) {
         return String.format(Locale.US, "%,d", amount);
