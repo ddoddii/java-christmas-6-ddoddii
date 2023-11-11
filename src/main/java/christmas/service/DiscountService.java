@@ -20,5 +20,17 @@ public class DiscountService {
         return 0;
     }
 
+    public int weekendDiscount(MenuCount menuCount, Date date){
+        if (date.isWeekend()){
+            return  menuCount.getValue()
+                    .entrySet()
+                    .stream()
+                    .filter(entry -> entry.getKey().isMainCategory())
+                    .mapToInt(entry -> DISCOUNT_AMOUNT * entry.getValue())
+                    .sum();
+        }
+        return 0;
+    }
+
 
 }

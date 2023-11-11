@@ -1,7 +1,9 @@
 package christmas;
 
 import christmas.model.Date;
+import christmas.model.MenuCount;
 import christmas.service.DiscountService;
+import christmas.util.Parser;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,6 +31,17 @@ public class DiscountTest {
         Date date = Date.of(26);
         // when & then
         Assertions.assertThat(discountService.christmasDiscount(date)).isEqualTo(0);
+    }
+
+    @DisplayName("주말이면 메인 메뉴 1개당 2,023원 할인을 받는다.")
+    @Test
+    void 주말_이벤트_테스트(){
+        //given
+        Date date = Date.of(8);
+        String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
+        MenuCount menuCount = new MenuCount(Parser.parseMenuCount(input));
+        // when & then
+        Assertions.assertThat(discountService.weekendDiscount(menuCount,date)).isEqualTo(4046);
     }
 
 
