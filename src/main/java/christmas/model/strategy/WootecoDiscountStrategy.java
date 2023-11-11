@@ -1,32 +1,36 @@
-package christmas.service;
+package christmas.model.strategy;
 
-import static christmas.model.Discount.CHRISTMAS_START_DISCOUNT;
-import static christmas.model.Discount.DISCOUNT_INCREMENT;
-import static christmas.model.Discount.FIXED_DISCOUNT;
-import static christmas.model.Discount.GIFT_EVENT_THRESHOLD;
-import static christmas.model.Discount.MIN_DISCOUNT_SERVICE;
-import static christmas.model.Discount.NO_DISCOUNT;
-import static christmas.model.Discount.SPECIAL_DAY_DISCOUNT;
+import static christmas.model.constant.Discount.CHRISTMAS_START_DISCOUNT;
+import static christmas.model.constant.Discount.DISCOUNT_INCREMENT;
+import static christmas.model.constant.Discount.FIXED_DISCOUNT;
+import static christmas.model.constant.Discount.GIFT_EVENT_THRESHOLD;
+import static christmas.model.constant.Discount.MIN_DISCOUNT_SERVICE;
+import static christmas.model.constant.Discount.NO_DISCOUNT;
+import static christmas.model.constant.Discount.SPECIAL_DAY_DISCOUNT;
 
 import christmas.model.Date;
 import christmas.model.Menu;
 import christmas.model.MenuCount;
 
-public class DiscountService {
+public class WootecoDiscountStrategy implements DiscountStrategy{
 
+
+    @Override
     public boolean canGetDiscount(MenuCount menuCount) {
         return menuCount.calculateTotalAmount() >= MIN_DISCOUNT_SERVICE.getAmount();
     }
 
+    @Override
     public int calculatePromotionAmount(MenuCount menuCount, Date date) {
         if (canGetDiscount(menuCount)) {
-            return calculateTotalDiscountAmount(menuCount, date)
+            return calaulateTotalDiscountAmount(menuCount, date)
                     + giftEventDiscount(menuCount);
         }
         return NO_DISCOUNT.getAmount();
     }
 
-    public int calculateTotalDiscountAmount(MenuCount menuCount, Date date) {
+    @Override
+    public int calaulateTotalDiscountAmount(MenuCount menuCount, Date date) {
         if (canGetDiscount(menuCount)) {
             return christmasDiscount(date)
                     + weekdayDiscount(menuCount, date)
@@ -90,6 +94,4 @@ public class DiscountService {
                 .mapToInt(entry -> FIXED_DISCOUNT.getAmount() * entry.getValue())
                 .sum();
     }
-
-
 }
