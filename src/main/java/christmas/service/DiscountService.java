@@ -1,6 +1,7 @@
 package christmas.service;
 
 import christmas.model.Date;
+import christmas.model.Menu;
 import christmas.model.MenuCount;
 
 public class DiscountService {
@@ -9,6 +10,7 @@ public class DiscountService {
     private final int MIN_DISCOUNT_SERVICE_AMOUNT = 10000;
     private final int DISCOUNT_AMOUNT = 2023;
     private final int SPECIAL_DAY_DISCOUNT = 1000;
+    private final int GIFT_EVENT_MIN_AMOUNT = 120000;
 
     public boolean canGetDiscount(MenuCount menuCount){
         return menuCount.calculateTotalAmount() >= MIN_DISCOUNT_SERVICE_AMOUNT;
@@ -38,6 +40,13 @@ public class DiscountService {
     public int specialDayDiscount(Date date){
         if (date.isSpecialDate()){
             return SPECIAL_DAY_DISCOUNT;
+        }
+        return 0;
+    }
+
+    public int giftEventDiscount(MenuCount menuCount){
+        if (menuCount.calculateTotalAmount() >= GIFT_EVENT_MIN_AMOUNT){
+            return Menu.CHAMPAGNE.getPrice();
         }
         return 0;
     }

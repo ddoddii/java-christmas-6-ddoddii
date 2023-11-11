@@ -1,6 +1,7 @@
 package christmas;
 
 import christmas.model.Date;
+import christmas.model.Menu;
 import christmas.model.MenuCount;
 import christmas.service.DiscountService;
 import christmas.util.Parser;
@@ -62,6 +63,16 @@ public class DiscountTest {
         Date date = Date.of(3);
         // when & then
         Assertions.assertThat(discountService.specialDayDiscount(date)).isEqualTo(1000);
+    }
+
+    @DisplayName("총주문 금액이 120,000원 이상이면 증정품을 받는다.")
+    @Test
+    void  증정_이벤트_테스트(){
+        //given
+        String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
+        MenuCount menuCount = new MenuCount(Parser.parseMenuCount(input));
+        // when & then
+        Assertions.assertThat(discountService.giftEventDiscount(menuCount)).isEqualTo(25000);
     }
 
 
