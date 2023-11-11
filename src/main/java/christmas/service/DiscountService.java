@@ -22,14 +22,35 @@ public class DiscountService {
 
     public int weekendDiscount(MenuCount menuCount, Date date){
         if (date.isWeekend()){
-            return  menuCount.getValue()
-                    .entrySet()
-                    .stream()
-                    .filter(entry -> entry.getKey().isMainCategory())
-                    .mapToInt(entry -> DISCOUNT_AMOUNT * entry.getValue())
-                    .sum();
+            return  calculateWeekendDiscountAmount(menuCount);
         }
         return 0;
+    }
+
+    public int  weekdayDiscount(MenuCount menuCount, Date date){
+        if (date.isWeekday()){
+            return calculateWeekdayDiscountAmount(menuCount);
+        }
+        return 0;
+    }
+
+
+    private int calculateWeekendDiscountAmount(MenuCount menuCount){
+        return menuCount.getValue()
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().isMainCategory())
+                .mapToInt(entry -> DISCOUNT_AMOUNT * entry.getValue())
+                .sum();
+    }
+
+    private int calculateWeekdayDiscountAmount(MenuCount menuCount){
+        return menuCount.getValue()
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().isDessertCategory())
+                .mapToInt(entry -> DISCOUNT_AMOUNT * entry.getValue())
+                .sum();
     }
 
 

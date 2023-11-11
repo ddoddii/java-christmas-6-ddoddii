@@ -44,5 +44,16 @@ public class DiscountTest {
         Assertions.assertThat(discountService.weekendDiscount(menuCount,date)).isEqualTo(4046);
     }
 
+    @DisplayName("평일이면 디저트 메뉴 1개당 2,023원 할인을 받는다.")
+    @Test
+    void 평일_이벤트_테스트(){
+        //given
+        Date date = Date.of(3);
+        String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
+        MenuCount menuCount = new MenuCount(Parser.parseMenuCount(input));
+        // when & then
+        Assertions.assertThat(discountService.weekdayDiscount(menuCount,date)).isEqualTo(4046);
+    }
+
 
 }
