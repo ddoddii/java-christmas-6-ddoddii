@@ -11,28 +11,29 @@ public enum DateConstant {
 
     private int date;
     private static final Set<Integer> WEEKDAYS = new HashSet<>(Arrays.asList(
-            1, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 18, 19, 20, 21, 22, 25, 26, 27, 28, 29
+            3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 31
     ));
     private static final Set<Integer> WEEKENDS = new HashSet<>(Arrays.asList(
-            1,2,8,9,15,16,22,23,29,30
+            1, 2, 8, 9, 15, 16, 22, 23, 29, 30
     ));
-    DateConstant(int date){
+
+    DateConstant(int date) {
         this.date = date;
     }
 
-    public int getDate(){
+    public int getDate() {
         return date;
     }
 
-    public static boolean isWeekday(int date){
+    public static boolean isWeekday(int date) {
         return WEEKDAYS.contains(date);
     }
 
-    public static boolean isWeekend(int date){
+    public static boolean isWeekend(int date) {
         return WEEKENDS.contains(date);
     }
 
-    public static boolean isBeforeXmas(int date){
+    public static boolean isBeforeXmas(int date) {
         return XMAS.date >= date;
     }
 }

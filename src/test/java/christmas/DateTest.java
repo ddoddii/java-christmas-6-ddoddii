@@ -20,7 +20,7 @@ public class DateTest {
 
     @DisplayName("평일인지 확인하는 테스트")
     @ParameterizedTest
-    @ValueSource(ints = {4,5,11,12,28})
+    @ValueSource(ints = {3, 4, 5, 6, 7, 10, 11, 12, 13, 14, 17, 18, 19, 20, 21, 24, 25, 26, 27, 28, 31})
     void 평일_테스트(int date){
         Date testDate = Date.of(date);
         Assertions.assertThat(testDate.isWeekday()).isTrue();
@@ -28,7 +28,7 @@ public class DateTest {
 
     @DisplayName("주말인지 확인하는 테스트")
     @ParameterizedTest
-    @ValueSource(ints = {1,2,8,9,29,30})
+    @ValueSource(ints = {1, 2, 8, 9, 15, 16, 22, 23, 29, 30})
     void 주말_테스트(int date){
         Date testDate = Date.of(date);
         Assertions.assertThat(testDate.isWeekend()).isTrue();
