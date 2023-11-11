@@ -1,6 +1,7 @@
 package christmas;
 
-import christmas.service.BadgeService;
+import christmas.model.strategy.BadgeStrategy;
+import christmas.model.strategy.WootecoBadgeStrategy;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,9 +17,9 @@ public class BadgeTest {
             "2000, '없음'"
     })
     void 혜택_금액에따른_배지부여_테스트(int promotionAmount, String expectedBadgeName){
-        BadgeService badgeService = new BadgeService();
+        BadgeStrategy badgeStrategy = new WootecoBadgeStrategy();
         // when
-        String badgeName = badgeService.calculateBadgeGrade(promotionAmount).getName();
+        String badgeName = badgeStrategy.calculateBadgeGrade(promotionAmount).getName();
         // then
         Assertions.assertThat(badgeName)
                 .isEqualTo(expectedBadgeName);
