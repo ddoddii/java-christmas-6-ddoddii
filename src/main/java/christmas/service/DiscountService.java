@@ -11,60 +11,67 @@ public class DiscountService {
     private final int DISCOUNT_AMOUNT = 2023;
     private final int SPECIAL_DAY_DISCOUNT = 1000;
     private final int GIFT_EVENT_MIN_AMOUNT = 120000;
+    private final int NO_DISCOUNT = 0;
 
-    public boolean canGetDiscount(MenuCount menuCount){
+    public boolean canGetDiscount(MenuCount menuCount) {
         return menuCount.calculateTotalAmount() >= MIN_DISCOUNT_SERVICE_AMOUNT;
     }
 
-    public int calculatePromotionAmount(MenuCount menuCount, Date date){
-        return calculateTotalDiscountAmount(menuCount,date)
-                + giftEventDiscount(menuCount);
+    public int calculatePromotionAmount(MenuCount menuCount, Date date) {
+        if (canGetDiscount(menuCount)) {
+            return calculateTotalDiscountAmount(menuCount, date)
+                    + giftEventDiscount(menuCount);
+        }
+        return NO_DISCOUNT;
     }
 
-    public int calculateTotalDiscountAmount(MenuCount menuCount, Date date){
-        return christmasDiscount(date)
-                + weekdayDiscount(menuCount,date)
-                + specialDayDiscount(date)
-                + weekendDiscount(menuCount, date);
+    public int calculateTotalDiscountAmount(MenuCount menuCount, Date date) {
+        if (canGetDiscount(menuCount)) {
+            return christmasDiscount(date)
+                    + weekdayDiscount(menuCount, date)
+                    + specialDayDiscount(date)
+                    + weekendDiscount(menuCount, date);
+        }
+        return NO_DISCOUNT;
     }
 
     public int christmasDiscount(Date date) {
         if (date.isBeforeXmas()) {
             return (START_XMAS_DISCOUNT_AMOUNT + (date.getValue() - 1) * INCREASING_AMOUNT);
         }
-        return 0;
+        return NO_DISCOUNT;
     }
 
-    public int weekendDiscount(MenuCount menuCount, Date date){
-        if (date.isWeekend()){
-            return  calculateWeekendDiscountAmount(menuCount);
+    public int weekendDiscount(MenuCount menuCount, Date date) {
+        if (date.isWeekend()) {
+            return calculateWeekendDiscountAmount(menuCount);
         }
-        return 0;
+        return NO_DISCOUNT;
     }
 
-    public int  weekdayDiscount(MenuCount menuCount, Date date){
-        if (date.isWeekday()){
+    public int weekdayDiscount(MenuCount menuCount, Date date) {
+        if (date.isWeekday()) {
             return calculateWeekdayDiscountAmount(menuCount);
         }
-        return 0;
+        return NO_DISCOUNT;
     }
 
-    public int specialDayDiscount(Date date){
-        if (date.isSpecialDate()){
+    public int specialDayDiscount(Date date) {
+        if (date.isSpecialDate()) {
             return SPECIAL_DAY_DISCOUNT;
         }
-        return 0;
+        return NO_DISCOUNT;
     }
 
-    public int giftEventDiscount(MenuCount menuCount){
-        if (menuCount.calculateTotalAmount() >= GIFT_EVENT_MIN_AMOUNT){
+    public int giftEventDiscount(MenuCount menuCount) {
+        if (menuCount.calculateTotalAmount() >= GIFT_EVENT_MIN_AMOUNT) {
             return Menu.CHAMPAGNE.getPrice();
         }
-        return 0;
+        return NO_DISCOUNT;
     }
 
 
-    private int calculateWeekendDiscountAmount(MenuCount menuCount){
+    private int calculateWeekendDiscountAmount(MenuCount menuCount) {
         return menuCount.getValue()
                 .entrySet()
                 .stream()
@@ -73,7 +80,7 @@ public class DiscountService {
                 .sum();
     }
 
-    private int calculateWeekdayDiscountAmount(MenuCount menuCount){
+    private int calculateWeekdayDiscountAmount(MenuCount menuCount) {
         return menuCount.getValue()
                 .entrySet()
                 .stream()
