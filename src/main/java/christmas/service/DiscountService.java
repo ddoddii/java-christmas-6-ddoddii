@@ -1,20 +1,14 @@
 package christmas.service;
 
 import christmas.model.Date;
+import christmas.model.Discount;
 import christmas.model.Menu;
 import christmas.model.MenuCount;
 
 public class DiscountService {
-    private final int START_XMAS_DISCOUNT_AMOUNT = 1000;
-    private final int INCREASING_AMOUNT = 100;
-    private final int MIN_DISCOUNT_SERVICE_AMOUNT = 10000;
-    private final int DISCOUNT_AMOUNT = 2023;
-    private final int SPECIAL_DAY_DISCOUNT = 1000;
-    private final int GIFT_EVENT_MIN_AMOUNT = 120000;
-    private final int NO_DISCOUNT = 0;
 
     public boolean canGetDiscount(MenuCount menuCount) {
-        return menuCount.calculateTotalAmount() >= MIN_DISCOUNT_SERVICE_AMOUNT;
+        return menuCount.calculateTotalAmount() >= Discount.MIN_DISCOUNT_SERVICE.getAmount();
     }
 
     public int calculatePromotionAmount(MenuCount menuCount, Date date) {
@@ -22,7 +16,7 @@ public class DiscountService {
             return calculateTotalDiscountAmount(menuCount, date)
                     + giftEventDiscount(menuCount);
         }
-        return NO_DISCOUNT;
+        return Discount.NO_DISCOUNT.getAmount();
     }
 
     public int calculateTotalDiscountAmount(MenuCount menuCount, Date date) {
@@ -32,42 +26,43 @@ public class DiscountService {
                     + specialDayDiscount(date)
                     + weekendDiscount(menuCount, date);
         }
-        return NO_DISCOUNT;
+        return Discount.NO_DISCOUNT.getAmount();
     }
 
     public int christmasDiscount(Date date) {
         if (date.isBeforeXmas()) {
-            return (START_XMAS_DISCOUNT_AMOUNT + (date.getValue() - 1) * INCREASING_AMOUNT);
+            return (Discount.CHRISTMAS_START_DISCOUNT.getAmount() + (date.getValue() - 1)
+                    * Discount.DISCOUNT_INCREMENT.getAmount());
         }
-        return NO_DISCOUNT;
+        return Discount.NO_DISCOUNT.getAmount();
     }
 
     public int weekendDiscount(MenuCount menuCount, Date date) {
         if (date.isWeekend()) {
             return calculateWeekendDiscountAmount(menuCount);
         }
-        return NO_DISCOUNT;
+        return Discount.NO_DISCOUNT.getAmount();
     }
 
     public int weekdayDiscount(MenuCount menuCount, Date date) {
         if (date.isWeekday()) {
             return calculateWeekdayDiscountAmount(menuCount);
         }
-        return NO_DISCOUNT;
+        return Discount.NO_DISCOUNT.getAmount();
     }
 
     public int specialDayDiscount(Date date) {
         if (date.isSpecialDate()) {
-            return SPECIAL_DAY_DISCOUNT;
+            return Discount.SPECIAL_DAY_DISCOUNT.getAmount();
         }
-        return NO_DISCOUNT;
+        return Discount.NO_DISCOUNT.getAmount();
     }
 
     public int giftEventDiscount(MenuCount menuCount) {
-        if (menuCount.calculateTotalAmount() >= GIFT_EVENT_MIN_AMOUNT) {
+        if (menuCount.calculateTotalAmount() >= Discount.GIFT_EVENT_THRESHOLD.getAmount()) {
             return Menu.CHAMPAGNE.getPrice();
         }
-        return NO_DISCOUNT;
+        return Discount.NO_DISCOUNT.getAmount();
     }
 
 
@@ -76,7 +71,7 @@ public class DiscountService {
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().isMainCategory())
-                .mapToInt(entry -> DISCOUNT_AMOUNT * entry.getValue())
+                .mapToInt(entry -> Discount.FIXED_DISCOUNT.getAmount() * entry.getValue())
                 .sum();
     }
 
@@ -85,7 +80,7 @@ public class DiscountService {
                 .entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().isDessertCategory())
-                .mapToInt(entry -> DISCOUNT_AMOUNT * entry.getValue())
+                .mapToInt(entry -> Discount.FIXED_DISCOUNT.getAmount() * entry.getValue())
                 .sum();
     }
 
