@@ -1,4 +1,4 @@
-package christmas.constant;
+package christmas.model.constant;
 
 import java.util.Arrays;
 import java.util.HashSet;

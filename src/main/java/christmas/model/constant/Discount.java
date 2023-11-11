@@ -1,4 +1,4 @@
-package christmas.model;
+package christmas.model.constant;
 
 public enum Discount {
     CHRISTMAS_START_DISCOUNT(1000),

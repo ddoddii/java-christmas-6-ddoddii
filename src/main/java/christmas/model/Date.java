@@ -1,6 +1,6 @@
 package christmas.model;
 
-import christmas.constant.DateConstant;
+import christmas.model.constant.DateConstant;
 import christmas.exception.date.DateRangeException;
 
 public class Date {
