@@ -14,6 +14,8 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class OutputViewTest {
     private OutputView outputView;
@@ -48,7 +50,6 @@ public class OutputViewTest {
         );
         Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
                 .collect(Collectors.toSet());
-
         Assertions.assertThat(actualOutputs).containsAll(expectedOutputs);
 
     }
@@ -67,9 +68,23 @@ public class OutputViewTest {
         );
         Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
                 .collect(Collectors.toSet());
-
         Assertions.assertThat(actualOutputs).containsAll(expectedOutputs);
+    }
 
+    @DisplayName("증정 메뉴를 출력한다.")
+    @ParameterizedTest
+    @CsvSource({
+            "true, '샴페인 1개'",
+            "false, '없음'"
+    })
+    void 증정메뉴_출력_테스트(boolean canGetGift, String expectedOutput){
+        //given
+        //when
+        outputView.displayGiftEvent(canGetGift);
+        //then
+        Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
+                .collect(Collectors.toSet());
+        Assertions.assertThat(actualOutputs).contains(expectedOutput);
     }
 
 }
