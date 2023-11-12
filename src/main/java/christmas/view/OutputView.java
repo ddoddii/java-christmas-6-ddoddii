@@ -1,14 +1,15 @@
 package christmas.view;
 
 import static christmas.view.ViewMessage.AMOUNT_BEFORE_DISCOUNT;
+import static christmas.view.ViewMessage.CHAMPAIGN_GIFT;
 import static christmas.view.ViewMessage.EVENT_BADGE;
 import static christmas.view.ViewMessage.EXPECTED_AMOUNT;
 import static christmas.view.ViewMessage.GIFT_EVENT;
+import static christmas.view.ViewMessage.NO_PROMOTION;
 import static christmas.view.ViewMessage.ORDERED_MENU;
 import static christmas.view.ViewMessage.PROMOTION;
 import static christmas.view.ViewMessage.TOTAL_PROMOTION_AMOUNT;
 
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,8 +17,6 @@ import java.util.stream.Collectors;
 public class OutputView {
     private final String QUANTITY_SUFFIX = "개";
     private final String MONEY_SUFFIX = "원";
-    private final String CHAMPAIGN_GIFT = "샴페인 1개";
-    private final String NOTHING = "없음";
     private final String STATUS_DELIMITER = ": ";
     private final String MINUS = "-";
 
@@ -43,10 +42,10 @@ public class OutputView {
     public void displayGiftEvent(boolean canGetGift) {
         System.out.println(GIFT_EVENT.getMessage());
         if (canGetGift) {
-            System.out.println(CHAMPAIGN_GIFT);
+            System.out.println(CHAMPAIGN_GIFT.getMessage());
             return;
         }
-        System.out.println(NOTHING);
+        System.out.println(NO_PROMOTION.getMessage());
 
     }
 
@@ -83,7 +82,7 @@ public class OutputView {
                             + formatMoney(entry.getValue()) + MONEY_SUFFIX)
                     .collect(Collectors.joining("\n"));
         }
-        return NOTHING;
+        return NO_PROMOTION.getMessage();
     }
 
     private String determinePromotionAmount(int promotionAmount){
