@@ -4,12 +4,14 @@ import static christmas.view.ViewMessage.AMOUNT_BEFORE_DISCOUNT;
 import static christmas.view.ViewMessage.CHAMPAIGN_GIFT;
 import static christmas.view.ViewMessage.EVENT_BADGE;
 import static christmas.view.ViewMessage.EXPECTED_AMOUNT;
-import static christmas.view.ViewMessage.GIFT_EVENT;
+import static christmas.view.ViewMessage.GIFT_MENU;
 import static christmas.view.ViewMessage.NO_PROMOTION;
 import static christmas.view.ViewMessage.ORDERED_MENU;
 import static christmas.view.ViewMessage.PROMOTION;
 import static christmas.view.ViewMessage.TOTAL_PROMOTION_AMOUNT;
 
+import christmas.model.Promotion;
+import java.util.EnumMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -40,7 +42,7 @@ public class OutputView {
     }
 
     public void printGiftEvent(boolean canGetGift) {
-        System.out.println(GIFT_EVENT.getMessage());
+        System.out.println(GIFT_MENU.getMessage());
         if (canGetGift) {
             System.out.println(CHAMPAIGN_GIFT.getMessage());
             return;
@@ -49,7 +51,7 @@ public class OutputView {
 
     }
 
-    public void printPromotionStatus(Map<String, Integer> promotionStatus) {
+    public void printPromotionStatus(EnumMap<Promotion,Integer> promotionStatus) {
         String promotion = determinePromotionStatus(promotionStatus);
         System.out.println(PROMOTION.getMessage());
         System.out.println(promotion);
@@ -75,14 +77,16 @@ public class OutputView {
         return String.format(Locale.US, "%,d", amount);
     }
 
-    private String determinePromotionStatus(Map<String, Integer> promotionStatus) {
-        if (promotionStatus != null) {
-            return promotionStatus.entrySet().stream()
-                    .map(entry -> entry.getKey() + STATUS_DELIMITER + MINUS
+    private String determinePromotionStatus(EnumMap<Promotion, Integer> promotionStatus) {
+        String promotions =  promotionStatus.entrySet().stream()
+                    .filter(entry -> entry.getValue() > 0)
+                    .map(entry -> entry.getKey().getName() + STATUS_DELIMITER + MINUS
                             + formatMoney(entry.getValue()) + MONEY_SUFFIX)
                     .collect(Collectors.joining("\n"));
+        if (promotions.isEmpty()){
+            return NO_PROMOTION.getMessage();
         }
-        return NO_PROMOTION.getMessage();
+        return promotions;
     }
 
     private String determinePromotionAmount(int promotionAmount){

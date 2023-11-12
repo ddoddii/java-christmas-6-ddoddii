@@ -11,6 +11,8 @@ import static christmas.model.constant.Discount.SPECIAL_DAY_DISCOUNT;
 import christmas.model.Date;
 import christmas.model.Menu;
 import christmas.model.MenuCount;
+import christmas.model.Promotion;
+import java.util.EnumMap;
 
 public class WootecoDiscountStrategy implements DiscountStrategy{
 
@@ -38,6 +40,16 @@ public class WootecoDiscountStrategy implements DiscountStrategy{
                     + weekendDiscount(menuCount, date);
         }
         return NO_DISCOUNT.getAmount();
+    }
+    @Override
+    public EnumMap<Promotion, Integer> getPromotionStatus(MenuCount menuCount, Date date){
+        EnumMap<Promotion,Integer> promotionStatus = new EnumMap<>(Promotion.class);
+        promotionStatus.put(Promotion.CHRISTMAS_DISCOUNT, christmasDiscount(date));
+        promotionStatus.put(Promotion.WEEKDAY_DISCOUNT, weekdayDiscount(menuCount, date));
+        promotionStatus.put(Promotion.WEEKEND_DISCOUNT, weekendDiscount(menuCount, date));
+        promotionStatus.put(Promotion.SPECIAL_DISCOUNT, specialDayDiscount(date));
+        promotionStatus.put(Promotion.GIFT_EVENT, giftEventDiscount(menuCount));
+        return promotionStatus;
     }
 
     public int christmasDiscount(Date date) {
