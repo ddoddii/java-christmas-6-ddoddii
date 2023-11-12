@@ -6,22 +6,24 @@ import christmas.validator.MenuValidator;
 
 public class InputView {
 
-    public void printGreetingMessage() {
+    public static void printGreetingMessage() {
         System.out.println(ViewMessage.GREETING.getMessage());
     }
 
-    public int readDate() {
+
+    public static  int readDate() {
         System.out.println(ViewMessage.DATE.getMessage());
+
         String input = Console.readLine();
         return Parser.parseDate(input);
     }
 
-    public String readMenu() {
+
+    public static String readMenu() {
         System.out.println(ViewMessage.MENU.getMessage());
         String input = Console.readLine();
         MenuValidator.validateMenuInputFormat(input);
         return input;
     }
-
 
 }
