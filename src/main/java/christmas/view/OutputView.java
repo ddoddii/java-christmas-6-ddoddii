@@ -20,12 +20,12 @@ public class OutputView {
     private final String STATUS_DELIMITER = ": ";
     private final String MINUS = "-";
 
-    public void displayEventMessage(int date) {
+    public void printEventMessage(int date) {
         String formattedMessage = String.format(ViewMessage.EVENT.getMessage(), date);
         System.out.println(formattedMessage);
     }
 
-    public void displayOrderedMenu(Map<String, Integer> parsedMenu) {
+    public void printOrderedMenu(Map<String, Integer> parsedMenu) {
         String orders = parsedMenu.entrySet().stream()
                 .map(entry -> entry.getKey() + " " + entry.getValue() + QUANTITY_SUFFIX)
                 .collect(Collectors.joining("\n"));
@@ -33,13 +33,13 @@ public class OutputView {
         System.out.println(orders);
     }
 
-    public void displayTotalOrderAmount(int amount) {
+    public void printTotalOrderAmount(int amount) {
         String formattedAmount = formatMoney(amount);
         System.out.println(AMOUNT_BEFORE_DISCOUNT.getMessage());
         System.out.println(formattedAmount + MONEY_SUFFIX);
     }
 
-    public void displayGiftEvent(boolean canGetGift) {
+    public void printGiftEvent(boolean canGetGift) {
         System.out.println(GIFT_EVENT.getMessage());
         if (canGetGift) {
             System.out.println(CHAMPAIGN_GIFT.getMessage());
@@ -49,24 +49,24 @@ public class OutputView {
 
     }
 
-    public void displayPromotionStatus(Map<String, Integer> promotionStatus) {
+    public void printPromotionStatus(Map<String, Integer> promotionStatus) {
         String promotion = determinePromotionStatus(promotionStatus);
         System.out.println(PROMOTION.getMessage());
         System.out.println(promotion);
     }
 
-    public void displayPromotionAmount(int promotionAmount){
+    public void printPromotionAmount(int promotionAmount){
         String formattedPromotionAmount = determinePromotionAmount(promotionAmount);
         System.out.println(TOTAL_PROMOTION_AMOUNT.getMessage());
         System.out.println(formattedPromotionAmount);
     }
 
-    public void displayExpectedPaymentAmount(int amount){
+    public void printExpectedPaymentAmount(int amount){
         System.out.println(EXPECTED_AMOUNT.getMessage());
         System.out.println(formatMoney(amount) + MONEY_SUFFIX);
     }
 
-    public void displayEventBadge(String badgeName){
+    public void printEventBadge(String badgeName){
         System.out.println(EVENT_BADGE.getMessage());
         System.out.println(badgeName);
     }

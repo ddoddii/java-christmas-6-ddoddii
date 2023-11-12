@@ -44,7 +44,7 @@ public class OutputViewTest {
         String input = "양송이수프-2,크리스마스파스타-2,바비큐립-1,레드와인-1";
         Map<String, Integer> parsedMenu = Parser.parseMenuCount(input);
         //when
-        outputView.displayOrderedMenu(parsedMenu);
+        outputView.printOrderedMenu(parsedMenu);
         //then
         Set<String> expectedOutputs = Set.of(
                 "<주문 메뉴>",
@@ -65,7 +65,7 @@ public class OutputViewTest {
         //given
         int amount = 142000;
         //when
-        outputView.displayTotalOrderAmount(amount);
+        outputView.printTotalOrderAmount(amount);
         //then
         Set<String> expectedOutputs = Set.of(
                 "<할인 전 총주문 금액>",
@@ -85,7 +85,7 @@ public class OutputViewTest {
     void 증정메뉴_출력_테스트(boolean canGetGift, String expectedOutput) {
         //given
         //when
-        outputView.displayGiftEvent(canGetGift);
+        outputView.printGiftEvent(canGetGift);
         //then
         Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
                 .collect(Collectors.toSet());
@@ -97,7 +97,7 @@ public class OutputViewTest {
     @MethodSource("providePromotionStatus")
     void 혜택_내역_출력_테스트(Map<String, Integer> promotionStatus, Set<String> expectedOutput) {
         //when
-        outputView.displayPromotionStatus(promotionStatus);
+        outputView.printPromotionStatus(promotionStatus);
         //then
         Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
                 .collect(Collectors.toSet());
@@ -119,7 +119,7 @@ public class OutputViewTest {
     @MethodSource("providePromotionAmount")
     void 혜택_금액_출력_테스트(int amount, Set<String> expectedOutput) {
         //when
-        outputView.displayPromotionAmount(amount);
+        outputView.printPromotionAmount(amount);
         //then
         Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
                 .collect(Collectors.toSet());
@@ -139,7 +139,7 @@ public class OutputViewTest {
         //given
         int amount = 8500;
         //when
-        outputView.displayExpectedPaymentAmount(amount);
+        outputView.printExpectedPaymentAmount(amount);
         //then
         Set<String> expectedOutputs = Set.of(
                 "<할인 후 예상 결제 금액>",
@@ -157,7 +157,7 @@ public class OutputViewTest {
         //given
         String badgeName = "산타";
         //when
-        outputView.displayEventBadge(badgeName);
+        outputView.printEventBadge(badgeName);
         //then
         Set<String> expectedOutputs = Set.of(
                 "<12월 이벤트 배지>",
