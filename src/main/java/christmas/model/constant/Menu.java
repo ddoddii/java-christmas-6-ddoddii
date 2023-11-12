@@ -1,7 +1,6 @@
-package christmas.model;
+package christmas.model.constant;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 public enum Menu {
     SOUP("애피타이저","양송이수프",6000),

@@ -8,7 +8,7 @@ import static christmas.model.constant.DiscountConstant.NO_DISCOUNT;
 import static christmas.model.constant.DiscountConstant.SPECIAL_DAY_DISCOUNT;
 
 import christmas.model.Date;
-import christmas.model.Menu;
+import christmas.model.constant.Menu;
 import christmas.model.MenuCount;
 
 public class WootecoDiscountStrategy implements DiscountStrategy {

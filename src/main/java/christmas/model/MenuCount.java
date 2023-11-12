@@ -1,5 +1,6 @@
 package christmas.model;
 
+import christmas.model.constant.Menu;
 import christmas.validator.MenuValidator;
 import java.util.EnumMap;
 import java.util.Map;

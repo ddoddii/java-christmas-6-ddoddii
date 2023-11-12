@@ -6,7 +6,7 @@ import christmas.exception.menu.MenuCountZeroException;
 import christmas.exception.menu.MenuFormatException;
 import christmas.exception.menu.MenuNotFoundException;
 import christmas.exception.menu.OnlyDrinkException;
-import christmas.model.Menu;
+import christmas.model.constant.Menu;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;

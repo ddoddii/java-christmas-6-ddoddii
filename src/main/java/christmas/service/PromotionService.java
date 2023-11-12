@@ -9,14 +9,11 @@ import static christmas.model.constant.PromotionConstant.WEEKDAY_DISCOUNT;
 import static christmas.model.constant.PromotionConstant.WEEKEND_DISCOUNT;
 
 import christmas.model.Date;
-import christmas.model.EventBadge;
-import christmas.model.Menu;
+import christmas.model.constant.EventBadge;
 import christmas.model.MenuCount;
 import christmas.model.constant.PromotionConstant;
 import christmas.model.strategy.BadgeStrategy;
 import christmas.model.strategy.DiscountStrategy;
-import christmas.model.strategy.WootecoBadgeStrategy;
-import christmas.model.strategy.WootecoDiscountStrategy;
 import java.util.EnumMap;
 
 public class PromotionService {

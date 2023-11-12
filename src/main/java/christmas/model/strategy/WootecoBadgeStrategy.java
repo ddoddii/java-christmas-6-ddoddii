@@ -1,6 +1,6 @@
 package christmas.model.strategy;
 
-import christmas.model.EventBadge;
+import christmas.model.constant.EventBadge;
 
 public class WootecoBadgeStrategy implements BadgeStrategy {
     @Override
