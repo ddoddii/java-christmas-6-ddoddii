@@ -13,7 +13,7 @@ public enum ViewMessage {
     TOTAL_PROMOTION_AMOUNT("<총혜택 금액>"),
     EXPECTED_AMOUNT("<할인 후 예상 결제 금액>"),
     EVENT_BADGE("<12월 이벤트 배지>"),
-    CHAMPAIGN_GIFT("삼페인 1개"),
+    CHAMPAIGN_GIFT("샴페인 1개"),
     NO_PROMOTION("없음");
 
     private final String message;
