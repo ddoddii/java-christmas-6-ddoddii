@@ -11,13 +11,16 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.MethodSource;
 
 public class OutputViewTest {
     private OutputView outputView;
@@ -90,27 +93,26 @@ public class OutputViewTest {
         Assertions.assertThat(actualOutputs).contains(expectedOutput);
     }
 
-    @DisplayName("혜택 내역 를 출력한다.")
-    @Test
-    void 혜택_내역_출력_테스트() {
-        //given
-        Map<String, Integer> promotionStatus = new LinkedHashMap<>() {
-            {
-            put("크리스마스 디데이 할인", 1200);
-            put("평일 할인",4046);
-            }
-        };
+    @DisplayName("혜택 내역을 출력한다.")
+    @ParameterizedTest
+    @MethodSource("providePromotionStatus")
+    void 혜택_내역_출력_테스트(Map<String,Integer> promotionStatus, Set<String> expectedOutput) {
         //when
         outputView.displayPromotionStatus(promotionStatus);
         //then
-        Set<String> expectedOutputs = Set.of(
-                "<혜택 내역>",
-                "크리스마스 디데이 할인: -1,200원",
-                "평일 할인: -4,046원"
-        );
         Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
                 .collect(Collectors.toSet());
-        Assertions.assertThat(actualOutputs).containsAll(expectedOutputs);
+        Assertions.assertThat(actualOutputs).containsAll(expectedOutput);
+    }
+
+    private static Stream<Arguments> providePromotionStatus() {
+        return Stream.of(
+                Arguments.of(new LinkedHashMap<>() {{
+                    put("크리스마스 디데이 할인", 1200);
+                    put("평일 할인", 4046);
+                }}, Set.of("<혜택 내역>", "크리스마스 디데이 할인: -1,200원", "평일 할인: -4,046원")),
+                Arguments.of(null, Set.of("<혜택 내역>", "없음")) // Case for null promotionStatus
+        );
     }
 
 
