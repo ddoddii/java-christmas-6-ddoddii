@@ -53,4 +53,23 @@ public class OutputViewTest {
 
     }
 
+    @DisplayName("총주문 금액을 출력한다.")
+    @Test
+    void 총주문금액_출력_테스트(){
+        //given
+        int amount = 142000;
+        //when
+        outputView.displayTotalOrderAmount(amount);
+        //then
+        Set<String> expectedOutputs = Set.of(
+                "<할인 전 총주문 금액>",
+                "142,000원"
+        );
+        Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
+                .collect(Collectors.toSet());
+
+        Assertions.assertThat(actualOutputs).containsAll(expectedOutputs);
+
+    }
+
 }
