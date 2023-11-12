@@ -1,6 +1,6 @@
 package christmas.model.constant;
 
-public enum Discount {
+public enum DiscountConstant {
     CHRISTMAS_START_DISCOUNT(1000),
     DISCOUNT_INCREMENT(100),
     MIN_DISCOUNT_SERVICE(10000),
@@ -12,7 +12,7 @@ public enum Discount {
 
     private int amount;
 
-    Discount(int amount) {
+    DiscountConstant(int amount) {
         this.amount = amount;
     }
 

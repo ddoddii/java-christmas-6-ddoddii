@@ -1,6 +1,6 @@
-package christmas.model;
+package christmas.model.constant;
 
-public enum Promotion {
+public enum PromotionConstant {
 
     CHRISTMAS_DISCOUNT("크리스마스 디데이 할인"),
     WEEKDAY_DISCOUNT("평일 할인"),
@@ -9,7 +9,7 @@ public enum Promotion {
     GIFT_EVENT("증정 이벤트");
 
     private String name;
-    Promotion(String name){
+    PromotionConstant(String name){
         this.name = name;
     }
 

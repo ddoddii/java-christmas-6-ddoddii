@@ -1,16 +1,14 @@
 package christmas;
 
 
-import christmas.model.Menu;
 import christmas.model.MenuCount;
-import christmas.model.Promotion;
+import christmas.model.constant.PromotionConstant;
 import christmas.util.Parser;
 import christmas.view.OutputView;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -101,7 +99,7 @@ public class OutputViewTest {
     @DisplayName("혜택 내역을 출력한다.")
     @ParameterizedTest
     @MethodSource("providePromotionStatus")
-    void 혜택_내역_출력_테스트(EnumMap<Promotion, Integer> promotionStatus, Set<String> expectedOutput) {
+    void 혜택_내역_출력_테스트(EnumMap<PromotionConstant, Integer> promotionStatus, Set<String> expectedOutput) {
         //when
         outputView.printPromotionStatus(promotionStatus);
         //then
@@ -112,13 +110,13 @@ public class OutputViewTest {
 
     private static Stream<Arguments> providePromotionStatus() {
         return Stream.of(
-                Arguments.of(new EnumMap<Promotion, Integer>(Promotion.class) {{
-                    put(Promotion.CHRISTMAS_DISCOUNT, 1200);
-                    put(Promotion.WEEKDAY_DISCOUNT, 4046);
+                Arguments.of(new EnumMap<PromotionConstant, Integer>(PromotionConstant.class) {{
+                    put(PromotionConstant.CHRISTMAS_DISCOUNT, 1200);
+                    put(PromotionConstant.WEEKDAY_DISCOUNT, 4046);
                 }}, Set.of("<혜택 내역>", "크리스마스 디데이 할인: -1,200원", "평일 할인: -4,046원")),
-                Arguments.of(new EnumMap<Promotion, Integer>(Promotion.class) {{
-                    put(Promotion.CHRISTMAS_DISCOUNT, 0 );
-                    put(Promotion.WEEKDAY_DISCOUNT, 0);
+                Arguments.of(new EnumMap<PromotionConstant, Integer>(PromotionConstant.class) {{
+                    put(PromotionConstant.CHRISTMAS_DISCOUNT, 0 );
+                    put(PromotionConstant.WEEKDAY_DISCOUNT, 0);
                 }}, Set.of("<혜택 내역>", "없음"))
         );
     }
