@@ -1,6 +1,7 @@
 package christmas.view;
 
 import static christmas.view.ViewMessage.AMOUNT_BEFORE_DISCOUNT;
+import static christmas.view.ViewMessage.EVENT_BADGE;
 import static christmas.view.ViewMessage.EXPECTED_AMOUNT;
 import static christmas.view.ViewMessage.GIFT_EVENT;
 import static christmas.view.ViewMessage.ORDERED_MENU;
@@ -64,6 +65,11 @@ public class OutputView {
     public void displayExpectedPaymentAmount(int amount){
         System.out.println(EXPECTED_AMOUNT.getMessage());
         System.out.println(formatMoney(amount) + MONEY_SUFFIX);
+    }
+
+    public void displayEventBadge(String badgeName){
+        System.out.println(EVENT_BADGE.getMessage());
+        System.out.println(badgeName);
     }
 
     private String formatMoney(int amount) {

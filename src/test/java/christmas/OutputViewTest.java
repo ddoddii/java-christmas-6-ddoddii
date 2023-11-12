@@ -20,7 +20,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 public class OutputViewTest {
     private OutputView outputView;
@@ -96,7 +95,7 @@ public class OutputViewTest {
     @DisplayName("혜택 내역을 출력한다.")
     @ParameterizedTest
     @MethodSource("providePromotionStatus")
-    void 혜택_내역_출력_테스트(Map<String,Integer> promotionStatus, Set<String> expectedOutput) {
+    void 혜택_내역_출력_테스트(Map<String, Integer> promotionStatus, Set<String> expectedOutput) {
         //when
         outputView.displayPromotionStatus(promotionStatus);
         //then
@@ -136,7 +135,7 @@ public class OutputViewTest {
 
     @DisplayName("할인 후 예상 결제 금액을 출력한다.")
     @Test
-    void 예상결제금액_출력_테스트(){
+    void 예상결제금액_출력_테스트() {
         //given
         int amount = 8500;
         //when
@@ -152,6 +151,23 @@ public class OutputViewTest {
 
     }
 
+    @DisplayName("이벤트 배지 내역을 출력한다.")
+    @Test
+    void 이벤트배지_출력_테스트() {
+        //given
+        String badgeName = "산타";
+        //when
+        outputView.displayEventBadge(badgeName);
+        //then
+        Set<String> expectedOutputs = Set.of(
+                "<12월 이벤트 배지>",
+                "산타"
+        );
+        Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
+                .collect(Collectors.toSet());
+        Assertions.assertThat(actualOutputs).containsAll(expectedOutputs);
+
+    }
 
 
 }
