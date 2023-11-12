@@ -25,13 +25,7 @@ public class PromotionController {
         Date date = getDate();
         MenuCount menuCount = getMenu();
         displayEventGuideMessage(date);
-        displayMenuInfo(menuCount);
-        displayTotalOrderAmount(menuCount);
-        displayGiftEvent(menuCount);
-        displayPromotionEvent(menuCount, date);
-        displayTotalPromotionAmount(menuCount, date);
-        displayExpectedPaymentAmount(menuCount, date);
-        displayEventBadge(menuCount, date);
+        displayResult(menuCount, date);
     }
 
 
@@ -49,6 +43,16 @@ public class PromotionController {
             Map<String,Integer> parsedMenu = Parser.parseMenuCount(input);
             return new MenuCount(parsedMenu);
         });
+    }
+
+    private void displayResult(MenuCount menuCount, Date date){
+        displayMenuInfo(menuCount);
+        displayTotalOrderAmount(menuCount);
+        displayGiftEvent(menuCount);
+        displayPromotionEvent(menuCount, date);
+        displayTotalPromotionAmount(menuCount, date);
+        displayExpectedPaymentAmount(menuCount, date);
+        displayEventBadge(menuCount, date);
     }
 
     private void displayEventGuideMessage(Date date){

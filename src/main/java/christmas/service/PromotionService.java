@@ -20,12 +20,14 @@ import christmas.model.strategy.WootecoDiscountStrategy;
 import java.util.EnumMap;
 
 public class PromotionService {
-    private BadgeStrategy badgeStrategy;
-    private DiscountStrategy discountStrategy;
+    private final DiscountStrategy discountStrategy;
+    private final BadgeStrategy badgeStrategy;
 
-    public PromotionService(){
-            this.badgeStrategy = new WootecoBadgeStrategy();
-            this.discountStrategy = new WootecoDiscountStrategy();
+
+    public PromotionService(DiscountStrategy discountStrategy, BadgeStrategy badgeStrategy){
+            this.discountStrategy = discountStrategy;
+        this.badgeStrategy = badgeStrategy;
+
     }
 
     public boolean canGetDiscount(MenuCount menuCount) {
