@@ -10,6 +10,7 @@ import static christmas.view.ViewMessage.ORDERED_MENU;
 import static christmas.view.ViewMessage.PROMOTION;
 import static christmas.view.ViewMessage.TOTAL_PROMOTION_AMOUNT;
 
+import christmas.model.MenuCount;
 import christmas.model.Promotion;
 import java.util.EnumMap;
 import java.util.Locale;
@@ -22,14 +23,15 @@ public class OutputView {
     private final String STATUS_DELIMITER = ": ";
     private final String MINUS = "-";
 
-    public void printEventMessage(int date) {
+    public void printEventGuideMessage(int date) {
         String formattedMessage = String.format(ViewMessage.EVENT.getMessage(), date);
         System.out.println(formattedMessage);
     }
 
-    public void printOrderedMenu(Map<String, Integer> parsedMenu) {
-        String orders = parsedMenu.entrySet().stream()
-                .map(entry -> entry.getKey() + " " + entry.getValue() + QUANTITY_SUFFIX)
+    public void printOrderedMenu(MenuCount menuCount) {
+        String orders = menuCount.getValue()
+                .entrySet().stream()
+                .map(entry -> entry.getKey().getName() + " " + entry.getValue() + QUANTITY_SUFFIX)
                 .collect(Collectors.joining("\n"));
         System.out.println(ORDERED_MENU.getMessage());
         System.out.println(orders);

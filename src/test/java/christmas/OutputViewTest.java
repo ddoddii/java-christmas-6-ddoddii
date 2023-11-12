@@ -1,6 +1,8 @@
 package christmas;
 
 
+import christmas.model.Menu;
+import christmas.model.MenuCount;
 import christmas.model.Promotion;
 import christmas.util.Parser;
 import christmas.view.OutputView;
@@ -44,9 +46,11 @@ public class OutputViewTest {
     void 주문메뉴_출력_테스트() {
         //given
         String input = "양송이수프-2,크리스마스파스타-2,바비큐립-1,레드와인-1";
-        Map<String, Integer> parsedMenu = Parser.parseMenuCount(input);
+        Map<String,Integer> parsedMenu = Parser.parseMenuCount(input);
+        MenuCount menuCount = new MenuCount(parsedMenu);
+
         //when
-        outputView.printOrderedMenu(parsedMenu);
+        outputView.printOrderedMenu(menuCount);
         //then
         Set<String> expectedOutputs = Set.of(
                 "<주문 메뉴>",
