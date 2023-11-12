@@ -6,7 +6,6 @@ import christmas.view.OutputView;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -21,6 +20,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class OutputViewTest {
     private OutputView outputView;
@@ -115,7 +115,7 @@ public class OutputViewTest {
         );
     }
 
-    @DisplayName("혜택 금액을 출력한다.")
+    @DisplayName("총혜택 금액을 출력한다.")
     @ParameterizedTest
     @MethodSource("providePromotionAmount")
     void 혜택_금액_출력_테스트(int amount, Set<String> expectedOutput) {
@@ -133,6 +133,25 @@ public class OutputViewTest {
                 Arguments.of(0, Set.of("<총혜택 금액>", "0원")) // Case for null promotionStatus
         );
     }
+
+    @DisplayName("할인 후 예상 결제 금액을 출력한다.")
+    @Test
+    void 예상결제금액_출력_테스트(){
+        //given
+        int amount = 8500;
+        //when
+        outputView.displayExpectedPaymentAmount(amount);
+        //then
+        Set<String> expectedOutputs = Set.of(
+                "<할인 후 예상 결제 금액>",
+                "8,500원"
+        );
+        Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
+                .collect(Collectors.toSet());
+        Assertions.assertThat(actualOutputs).containsAll(expectedOutputs);
+
+    }
+
 
 
 }

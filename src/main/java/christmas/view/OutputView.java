@@ -1,11 +1,13 @@
 package christmas.view;
 
 import static christmas.view.ViewMessage.AMOUNT_BEFORE_DISCOUNT;
+import static christmas.view.ViewMessage.EXPECTED_AMOUNT;
 import static christmas.view.ViewMessage.GIFT_EVENT;
 import static christmas.view.ViewMessage.ORDERED_MENU;
 import static christmas.view.ViewMessage.PROMOTION;
 import static christmas.view.ViewMessage.TOTAL_PROMOTION_AMOUNT;
 
+import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -59,6 +61,11 @@ public class OutputView {
         System.out.println(formattedPromotionAmount);
     }
 
+    public void displayExpectedPaymentAmount(int amount){
+        System.out.println(EXPECTED_AMOUNT.getMessage());
+        System.out.println(formatMoney(amount) + MONEY_SUFFIX);
+    }
+
     private String formatMoney(int amount) {
         return String.format(Locale.US, "%,d", amount);
     }
@@ -79,4 +86,5 @@ public class OutputView {
         }
         return (MINUS + formatMoney(promotionAmount) + MONEY_SUFFIX);
     }
+
 }
