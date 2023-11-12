@@ -5,7 +5,6 @@ import static christmas.view.ViewMessage.GIFT_EVENT;
 import static christmas.view.ViewMessage.ORDERED_MENU;
 import static christmas.view.ViewMessage.PROMOTION;
 
-import christmas.util.Parser;
 import java.util.Locale;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,7 +13,7 @@ public class OutputView {
     private final String QUANTITY_SUFFIX = "개";
     private final String MONEY_SUFFIX = "원";
     private final String CHAMPAIGN_GIFT = "샴페인 1개";
-    private final String NO_GIFT = "없음";
+    private final String NOTHING = "없음";
     private final String STATUS_DELIMITER = ": ";
     private final String MINUS = "-";
 
@@ -43,22 +42,28 @@ public class OutputView {
             System.out.println(CHAMPAIGN_GIFT);
             return;
         }
-        System.out.println(NO_GIFT);
+        System.out.println(NOTHING);
 
     }
 
     public void displayPromotionStatus(Map<String, Integer> promotionStatus) {
-        String promotion = promotionStatus.entrySet().stream()
-                .map(entry -> entry.getKey() + STATUS_DELIMITER + MINUS
-                        + formatMoney(entry.getValue()) + MONEY_SUFFIX)
-                .collect(Collectors.joining("\n"));
+        String promotion = determinePromotionStatus(promotionStatus);
         System.out.println(PROMOTION.getMessage());
         System.out.println(promotion);
-
     }
 
     private String formatMoney(int amount) {
         return String.format(Locale.US, "%,d", amount);
+    }
+
+    private String determinePromotionStatus(Map<String, Integer> promotionStatus) {
+        if (promotionStatus != null) {
+            return promotionStatus.entrySet().stream()
+                    .map(entry -> entry.getKey() + STATUS_DELIMITER + MINUS
+                            + formatMoney(entry.getValue()) + MONEY_SUFFIX)
+                    .collect(Collectors.joining("\n"));
+        }
+        return NOTHING;
     }
 
 
