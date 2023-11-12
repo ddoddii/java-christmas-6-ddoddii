@@ -2,6 +2,7 @@ package christmas;
 
 import christmas.model.Date;
 import christmas.model.MenuCount;
+import christmas.model.strategy.WootecoBadgeStrategy;
 import christmas.model.strategy.WootecoDiscountStrategy;
 import christmas.service.PromotionService;
 import christmas.util.Parser;
@@ -13,14 +14,17 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-public class DiscountTest {
+public class PromotionTest {
     private PromotionService promotionService;
     private WootecoDiscountStrategy discountStrategy;
+    private WootecoBadgeStrategy badgeStrategy;
 
     @BeforeEach
     void SetUp(){
+
         discountStrategy = new WootecoDiscountStrategy();
-        promotionService = new PromotionService();
+        badgeStrategy = new WootecoBadgeStrategy();
+        promotionService = new PromotionService(discountStrategy, badgeStrategy);
     }
 
     @DisplayName("크리스마스 날짜 전이면 크리스마스 할인을 받는다.")
@@ -143,6 +147,24 @@ public class DiscountTest {
     private MenuCount makeMenuCount(String input) {
         Map<String, Integer> parsedMenu = Parser.parseMenuCount(input);
         return new MenuCount(parsedMenu);
+    }
+
+    @DisplayName("총 혜택 금액에 따라 배지를 부여한다.")
+    @ParameterizedTest
+    @CsvSource({
+            "3, '티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1', '산타'",
+            "26, '타파스-1,제로콜라-1','없음'"
+    })
+    void 혜택_금액에따른_배지부여_테스트(int inputDate, String input, String expectedBadgeName){
+        // given
+        Date date = Date.of(inputDate);
+        MenuCount menuCount = makeMenuCount(input);
+        // when
+        String badgeName = promotionService.calculateBadgeStatus(menuCount, date);
+        // then
+        Assertions.assertThat(badgeName)
+                .isEqualTo(expectedBadgeName);
+        ;
     }
 
 
