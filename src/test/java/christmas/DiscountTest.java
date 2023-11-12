@@ -3,26 +3,33 @@ package christmas;
 import christmas.model.Date;
 import christmas.model.MenuCount;
 import christmas.model.strategy.WootecoDiscountStrategy;
+import christmas.service.PromotionService;
 import christmas.util.Parser;
 import java.util.Map;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
 public class DiscountTest {
+    private PromotionService promotionService;
     private WootecoDiscountStrategy discountStrategy;
+
+    @BeforeEach
+    void SetUp(){
+        discountStrategy = new WootecoDiscountStrategy();
+        promotionService = new PromotionService();
+    }
 
     @DisplayName("크리스마스 날짜 전이면 크리스마스 할인을 받는다.")
     @Test
     void 크리스마스_날짜_전_테스트() {
         //given
         Date date = Date.of(23);
-        String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
-        discountStrategy = makeDiscountStrategy(input, date);
         //when
-        int expectedDiscount = discountStrategy.christmasDiscount();
+        int expectedDiscount = discountStrategy.christmasDiscount(date);
         //then
         Assertions.assertThat(expectedDiscount).isEqualTo(3200);
     }
@@ -32,10 +39,8 @@ public class DiscountTest {
     void 크리스마스_날짜_후_테스트() {
         // given
         Date date = Date.of(26);
-        String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
-        discountStrategy = makeDiscountStrategy(input, date);
         // when
-        int expectedDiscount = discountStrategy.christmasDiscount();
+        int expectedDiscount = discountStrategy.christmasDiscount(date);
         // then
         Assertions.assertThat(expectedDiscount).isEqualTo(0);
     }
@@ -46,9 +51,9 @@ public class DiscountTest {
         // given
         Date date = Date.of(8);
         String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
-        discountStrategy = makeDiscountStrategy(input, date);
+        MenuCount menuCount = makeMenuCount(input);
         // when
-        int expectedDiscount = discountStrategy.weekendDiscount();
+        int expectedDiscount = discountStrategy.weekendDiscount(menuCount, date);
         // then
         Assertions.assertThat(expectedDiscount).isEqualTo(4046);
     }
@@ -59,9 +64,9 @@ public class DiscountTest {
         // given
         Date date = Date.of(3);
         String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
-        discountStrategy = makeDiscountStrategy(input, date);
+        MenuCount menuCount = makeMenuCount(input);
         // when
-        int expectedDiscount = discountStrategy.weekdayDiscount();
+        int expectedDiscount = discountStrategy.weekdayDiscount(menuCount, date);
         // then
         Assertions.assertThat(expectedDiscount).isEqualTo(4046);
     }
@@ -71,10 +76,8 @@ public class DiscountTest {
     void 특별날짜_이벤트_테스트() {
         // given
         Date date = Date.of(3);
-        String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
-        discountStrategy = makeDiscountStrategy(input, date);
         // when
-        int expectedDiscount = discountStrategy.specialDayDiscount();
+        int expectedDiscount = discountStrategy.specialDayDiscount(date);
         // then
         Assertions.assertThat(expectedDiscount).isEqualTo(1000);
     }
@@ -85,9 +88,9 @@ public class DiscountTest {
         // given
         Date date = Date.of(3);
         String input = "티본스테이크-1,바비큐립-1,초코케이크-2,제로콜라-1";
-        discountStrategy = makeDiscountStrategy(input, date);
+        MenuCount menuCount = makeMenuCount(input);
         // when
-        int expectedDiscount = discountStrategy.giftEventDiscount();
+        int expectedDiscount = discountStrategy.giftEventDiscount(menuCount);
         // then
         Assertions.assertThat(expectedDiscount).isEqualTo(25000);
     }
@@ -101,9 +104,9 @@ public class DiscountTest {
     void 총할인_계산_테스트(int inputDate, String input, int expectedAmount) {
         //given
         Date date = Date.of(inputDate);
-        discountStrategy = makeDiscountStrategy(input, date);
+        MenuCount menuCount = makeMenuCount(input);
         // when & then
-        Assertions.assertThat(discountStrategy.calaulateTotalDiscountAmount())
+        Assertions.assertThat(promotionService.calaulateTotalDiscountAmount(menuCount,date))
                 .isEqualTo(expectedAmount);
     }
 
@@ -116,9 +119,9 @@ public class DiscountTest {
     void 총혜택_계산_테스트(int inputDate, String input, int expectedAmount) {
         //given
         Date date = Date.of(inputDate);
-        discountStrategy = makeDiscountStrategy(input, date);
+        MenuCount menuCount = makeMenuCount(input);
         // when & then
-        Assertions.assertThat(discountStrategy.calculatePromotionAmount())
+        Assertions.assertThat(promotionService.calculatePromotionAmount(menuCount,date))
                 .isEqualTo(expectedAmount);
     }
 
@@ -131,9 +134,9 @@ public class DiscountTest {
     void 총주문_10000원이하_계산_테스트(int inputDate, String input, int expectedAmount) {
         //given
         Date date = Date.of(inputDate);
-        discountStrategy = makeDiscountStrategy(input, date);
+        MenuCount menuCount = makeMenuCount(input);
         // when & then
-        Assertions.assertThat(discountStrategy.calculatePromotionAmount())
+        Assertions.assertThat(promotionService.calculatePromotionAmount(menuCount, date))
                 .isEqualTo(expectedAmount);
     }
 
@@ -142,10 +145,6 @@ public class DiscountTest {
         return new MenuCount(parsedMenu);
     }
 
-    private WootecoDiscountStrategy makeDiscountStrategy(String input, Date date) {
-        MenuCount menuCount = makeMenuCount(input);
-        return new WootecoDiscountStrategy(menuCount, date);
-    }
 
 
 }
