@@ -6,6 +6,8 @@ import christmas.view.OutputView;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,21 +22,22 @@ import org.junit.jupiter.params.provider.CsvSource;
 public class OutputViewTest {
     private OutputView outputView;
     private static ByteArrayOutputStream outputMessage;
+
     @BeforeEach
-    void setUp(){
+    void setUp() {
         outputView = new OutputView();
         outputMessage = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputMessage));
     }
 
     @AfterEach
-    void restoreStreams(){
+    void restoreStreams() {
         System.setOut(System.out);
     }
 
     @DisplayName("주문받은 메뉴를 출력한다.")
     @Test
-    void 주문메뉴_출력_테스트(){
+    void 주문메뉴_출력_테스트() {
         //given
         String input = "양송이수프-2,크리스마스파스타-2,바비큐립-1,레드와인-1";
         Map<String, Integer> parsedMenu = Parser.parseMenuCount(input);
@@ -56,7 +59,7 @@ public class OutputViewTest {
 
     @DisplayName("총주문 금액을 출력한다.")
     @Test
-    void 총주문금액_출력_테스트(){
+    void 총주문금액_출력_테스트() {
         //given
         int amount = 142000;
         //when
@@ -77,7 +80,7 @@ public class OutputViewTest {
             "true, '샴페인 1개'",
             "false, '없음'"
     })
-    void 증정메뉴_출력_테스트(boolean canGetGift, String expectedOutput){
+    void 증정메뉴_출력_테스트(boolean canGetGift, String expectedOutput) {
         //given
         //when
         outputView.displayGiftEvent(canGetGift);
@@ -86,5 +89,29 @@ public class OutputViewTest {
                 .collect(Collectors.toSet());
         Assertions.assertThat(actualOutputs).contains(expectedOutput);
     }
+
+    @DisplayName("혜택 내역 를 출력한다.")
+    @Test
+    void 혜택_내역_출력_테스트() {
+        //given
+        Map<String, Integer> promotionStatus = new LinkedHashMap<>() {
+            {
+            put("크리스마스 디데이 할인", 1200);
+            put("평일 할인",4046);
+            }
+        };
+        //when
+        outputView.displayPromotionStatus(promotionStatus);
+        //then
+        Set<String> expectedOutputs = Set.of(
+                "<혜택 내역>",
+                "크리스마스 디데이 할인: -1,200원",
+                "평일 할인: -4,046원"
+        );
+        Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
+                .collect(Collectors.toSet());
+        Assertions.assertThat(actualOutputs).containsAll(expectedOutputs);
+    }
+
 
 }
