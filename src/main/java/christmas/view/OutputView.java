@@ -4,6 +4,7 @@ import static christmas.view.ViewMessage.AMOUNT_BEFORE_DISCOUNT;
 import static christmas.view.ViewMessage.GIFT_EVENT;
 import static christmas.view.ViewMessage.ORDERED_MENU;
 import static christmas.view.ViewMessage.PROMOTION;
+import static christmas.view.ViewMessage.TOTAL_PROMOTION_AMOUNT;
 
 import java.util.Locale;
 import java.util.Map;
@@ -52,6 +53,12 @@ public class OutputView {
         System.out.println(promotion);
     }
 
+    public void displayPromotionAmount(int promotionAmount){
+        String formattedPromotionAmount = determinePromotionAmount(promotionAmount);
+        System.out.println(TOTAL_PROMOTION_AMOUNT.getMessage());
+        System.out.println(formattedPromotionAmount);
+    }
+
     private String formatMoney(int amount) {
         return String.format(Locale.US, "%,d", amount);
     }
@@ -66,5 +73,10 @@ public class OutputView {
         return NOTHING;
     }
 
-
+    private String determinePromotionAmount(int promotionAmount){
+        if (promotionAmount == 0){
+            return (promotionAmount + MONEY_SUFFIX);
+        }
+        return (MINUS + formatMoney(promotionAmount) + MONEY_SUFFIX);
+    }
 }
