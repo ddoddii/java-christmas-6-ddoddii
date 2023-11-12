@@ -16,43 +16,51 @@ import java.util.EnumMap;
 
 public class WootecoDiscountStrategy implements DiscountStrategy{
 
+    private final MenuCount menuCount;
+    private final Date date;
+
+    public WootecoDiscountStrategy(MenuCount menuCount, Date date){
+        this.menuCount = menuCount;
+        this.date = date;
+    }
+
 
     @Override
-    public boolean canGetDiscount(MenuCount menuCount) {
+    public boolean canGetDiscount() {
         return menuCount.calculateTotalAmount() >= MIN_DISCOUNT_SERVICE.getAmount();
     }
 
     @Override
-    public int calculatePromotionAmount(MenuCount menuCount, Date date) {
-        if (canGetDiscount(menuCount)) {
-            return calaulateTotalDiscountAmount(menuCount, date)
-                    + giftEventDiscount(menuCount);
+    public int calculatePromotionAmount() {
+        if (canGetDiscount()) {
+            return calaulateTotalDiscountAmount()
+                    + giftEventDiscount();
         }
         return NO_DISCOUNT.getAmount();
     }
 
     @Override
-    public int calaulateTotalDiscountAmount(MenuCount menuCount, Date date) {
-        if (canGetDiscount(menuCount)) {
-            return christmasDiscount(date)
-                    + weekdayDiscount(menuCount, date)
-                    + specialDayDiscount(date)
-                    + weekendDiscount(menuCount, date);
+    public int calaulateTotalDiscountAmount() {
+        if (canGetDiscount()) {
+            return christmasDiscount()
+                    + weekdayDiscount()
+                    + specialDayDiscount()
+                    + weekendDiscount();
         }
         return NO_DISCOUNT.getAmount();
     }
     @Override
-    public EnumMap<Promotion, Integer> getPromotionStatus(MenuCount menuCount, Date date){
+    public EnumMap<Promotion, Integer> getPromotionStatus(){
         EnumMap<Promotion,Integer> promotionStatus = new EnumMap<>(Promotion.class);
-        promotionStatus.put(Promotion.CHRISTMAS_DISCOUNT, christmasDiscount(date));
-        promotionStatus.put(Promotion.WEEKDAY_DISCOUNT, weekdayDiscount(menuCount, date));
-        promotionStatus.put(Promotion.WEEKEND_DISCOUNT, weekendDiscount(menuCount, date));
-        promotionStatus.put(Promotion.SPECIAL_DISCOUNT, specialDayDiscount(date));
-        promotionStatus.put(Promotion.GIFT_EVENT, giftEventDiscount(menuCount));
+        promotionStatus.put(Promotion.CHRISTMAS_DISCOUNT, christmasDiscount());
+        promotionStatus.put(Promotion.WEEKDAY_DISCOUNT, weekdayDiscount());
+        promotionStatus.put(Promotion.WEEKEND_DISCOUNT, weekendDiscount());
+        promotionStatus.put(Promotion.SPECIAL_DISCOUNT, specialDayDiscount());
+        promotionStatus.put(Promotion.GIFT_EVENT, giftEventDiscount());
         return promotionStatus;
     }
 
-    public int christmasDiscount(Date date) {
+    public int christmasDiscount() {
         if (date.isBeforeXmas()) {
             return (CHRISTMAS_START_DISCOUNT.getAmount() + (date.getValue() - 1)
                     * DISCOUNT_INCREMENT.getAmount());
@@ -60,28 +68,28 @@ public class WootecoDiscountStrategy implements DiscountStrategy{
         return NO_DISCOUNT.getAmount();
     }
 
-    public int weekendDiscount(MenuCount menuCount, Date date) {
+    public int weekendDiscount() {
         if (date.isWeekend()) {
-            return calculateWeekendDiscountAmount(menuCount);
+            return calculateWeekendDiscountAmount();
         }
         return NO_DISCOUNT.getAmount();
     }
 
-    public int weekdayDiscount(MenuCount menuCount, Date date) {
+    public int weekdayDiscount() {
         if (date.isWeekday()) {
-            return calculateWeekdayDiscountAmount(menuCount);
+            return calculateWeekdayDiscountAmount();
         }
         return NO_DISCOUNT.getAmount();
     }
 
-    public int specialDayDiscount(Date date) {
+    public int specialDayDiscount() {
         if (date.isSpecialDate()) {
             return SPECIAL_DAY_DISCOUNT.getAmount();
         }
         return NO_DISCOUNT.getAmount();
     }
 
-    public int giftEventDiscount(MenuCount menuCount) {
+    public int giftEventDiscount() {
         if (menuCount.calculateTotalAmount() >= GIFT_EVENT_THRESHOLD.getAmount()) {
             return Menu.CHAMPAGNE.getPrice();
         }
@@ -89,7 +97,7 @@ public class WootecoDiscountStrategy implements DiscountStrategy{
     }
 
 
-    private int calculateWeekendDiscountAmount(MenuCount menuCount) {
+    private int calculateWeekendDiscountAmount() {
         return menuCount.getValue()
                 .entrySet()
                 .stream()
@@ -98,7 +106,7 @@ public class WootecoDiscountStrategy implements DiscountStrategy{
                 .sum();
     }
 
-    private int calculateWeekdayDiscountAmount(MenuCount menuCount) {
+    private int calculateWeekdayDiscountAmount() {
         return menuCount.getValue()
                 .entrySet()
                 .stream()
