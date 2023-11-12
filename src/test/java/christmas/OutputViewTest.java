@@ -115,5 +115,24 @@ public class OutputViewTest {
         );
     }
 
+    @DisplayName("혜택 금액을 출력한다.")
+    @ParameterizedTest
+    @MethodSource("providePromotionAmount")
+    void 혜택_금액_출력_테스트(int amount, Set<String> expectedOutput) {
+        //when
+        outputView.displayPromotionAmount(amount);
+        //then
+        Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
+                .collect(Collectors.toSet());
+        Assertions.assertThat(actualOutputs).containsAll(expectedOutput);
+    }
+
+    private static Stream<Arguments> providePromotionAmount() {
+        return Stream.of(
+                Arguments.of(34562, Set.of("<총혜택 금액>", "-34,562원")),
+                Arguments.of(0, Set.of("<총혜택 금액>", "0원")) // Case for null promotionStatus
+        );
+    }
+
 
 }
