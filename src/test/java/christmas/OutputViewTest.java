@@ -24,12 +24,10 @@ import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 public class OutputViewTest {
-    private OutputView outputView;
     private static ByteArrayOutputStream outputMessage;
 
     @BeforeEach
     void setUp() {
-        outputView = new OutputView();
         outputMessage = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outputMessage));
     }
@@ -48,7 +46,7 @@ public class OutputViewTest {
         MenuCount menuCount = new MenuCount(parsedMenu);
 
         //when
-        outputView.printOrderedMenu(menuCount);
+        OutputView.printOrderedMenu(menuCount);
         //then
         Set<String> expectedOutputs = Set.of(
                 "<주문 메뉴>",
@@ -69,7 +67,7 @@ public class OutputViewTest {
         //given
         int amount = 142000;
         //when
-        outputView.printTotalOrderAmount(amount);
+        OutputView.printTotalOrderAmount(amount);
         //then
         Set<String> expectedOutputs = Set.of(
                 "<할인 전 총주문 금액>",
@@ -89,7 +87,7 @@ public class OutputViewTest {
     void 증정메뉴_출력_테스트(boolean canGetGift, String expectedOutput) {
         //given
         //when
-        outputView.printGiftEvent(canGetGift);
+        OutputView.printGiftEvent(canGetGift);
         //then
         Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
                 .collect(Collectors.toSet());
@@ -101,7 +99,7 @@ public class OutputViewTest {
     @MethodSource("providePromotionStatus")
     void 혜택_내역_출력_테스트(EnumMap<PromotionConstant, Integer> promotionStatus, Set<String> expectedOutput) {
         //when
-        outputView.printPromotionStatus(promotionStatus);
+        OutputView.printPromotionStatus(promotionStatus);
         //then
         Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
                 .collect(Collectors.toSet());
@@ -126,7 +124,7 @@ public class OutputViewTest {
     @MethodSource("providePromotionAmount")
     void 혜택_금액_출력_테스트(int amount, Set<String> expectedOutput) {
         //when
-        outputView.printPromotionAmount(amount);
+        OutputView.printPromotionAmount(amount);
         //then
         Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
                 .collect(Collectors.toSet());
@@ -146,7 +144,7 @@ public class OutputViewTest {
         //given
         int amount = 8500;
         //when
-        outputView.printExpectedPaymentAmount(amount);
+        OutputView.printExpectedPaymentAmount(amount);
         //then
         Set<String> expectedOutputs = Set.of(
                 "<할인 후 예상 결제 금액>",
@@ -164,7 +162,7 @@ public class OutputViewTest {
         //given
         String badgeName = "산타";
         //when
-        outputView.printEventBadge(badgeName);
+        OutputView.printEventBadge(badgeName);
         //then
         Set<String> expectedOutputs = Set.of(
                 "<12월 이벤트 배지>",
