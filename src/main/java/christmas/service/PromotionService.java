@@ -9,8 +9,8 @@ import static christmas.model.constant.PromotionConstant.WEEKDAY_DISCOUNT;
 import static christmas.model.constant.PromotionConstant.WEEKEND_DISCOUNT;
 
 import christmas.model.Date;
-import christmas.model.constant.EventBadge;
 import christmas.model.MenuCount;
+import christmas.model.constant.EventBadge;
 import christmas.model.constant.PromotionConstant;
 import christmas.model.strategy.BadgeStrategy;
 import christmas.model.strategy.DiscountStrategy;
@@ -21,10 +21,9 @@ public class PromotionService {
     private final BadgeStrategy badgeStrategy;
 
 
-    public PromotionService(DiscountStrategy discountStrategy, BadgeStrategy badgeStrategy){
-            this.discountStrategy = discountStrategy;
+    public PromotionService(DiscountStrategy discountStrategy, BadgeStrategy badgeStrategy) {
+        this.discountStrategy = discountStrategy;
         this.badgeStrategy = badgeStrategy;
-
     }
 
     public boolean canGetDiscount(MenuCount menuCount) {
@@ -48,8 +47,9 @@ public class PromotionService {
         }
         return NO_DISCOUNT.getAmount();
     }
-    public EnumMap<PromotionConstant, Integer> getPromotionStatus(MenuCount menuCount, Date date){
-        EnumMap<PromotionConstant,Integer> promotionStatus = new EnumMap<>(PromotionConstant.class);
+
+    public EnumMap<PromotionConstant, Integer> getPromotionStatus(MenuCount menuCount, Date date) {
+        EnumMap<PromotionConstant, Integer> promotionStatus = new EnumMap<>(PromotionConstant.class);
         promotionStatus.put(CHRISTMAS_DISCOUNT, discountStrategy.christmasDiscount(date));
         promotionStatus.put(WEEKDAY_DISCOUNT, discountStrategy.weekdayDiscount(menuCount, date));
         promotionStatus.put(WEEKEND_DISCOUNT, discountStrategy.weekendDiscount(menuCount, date));
@@ -58,7 +58,7 @@ public class PromotionService {
         return promotionStatus;
     }
 
-    public String calculateBadgeStatus(MenuCount menuCount, Date date){
+    public String calculateBadgeStatus(MenuCount menuCount, Date date) {
         int promotionAmount = calculatePromotionAmount(menuCount, date);
         EventBadge badge = badgeStrategy.calculateBadgeGrade(promotionAmount);
         return badge.getName();

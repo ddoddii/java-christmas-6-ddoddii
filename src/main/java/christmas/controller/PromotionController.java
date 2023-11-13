@@ -30,7 +30,7 @@ public class PromotionController {
     }
 
 
-    private Date getDate(){
+    private Date getDate() {
         return executeWithExceptionHandle(() -> {
             int inputDate = InputView.readDate();
             return Date.of(inputDate);
@@ -38,20 +38,20 @@ public class PromotionController {
 
     }
 
-    private MenuCount getMenu(){
+    private MenuCount getMenu() {
         return executeWithExceptionHandle(() -> {
             String input = InputView.readMenu();
-            Map<String,Integer> parsedMenu = Parser.parseMenuCount(input);
+            Map<String, Integer> parsedMenu = Parser.parseMenuCount(input);
             return new MenuCount(parsedMenu);
         });
     }
 
-    private void displayMenuAndOrderAmount(MenuCount menuCount){
+    private void displayMenuAndOrderAmount(MenuCount menuCount) {
         displayMenuInfo(menuCount);
         displayTotalOrderAmount(menuCount);
     }
 
-    private void displayPromotionResult(MenuCount menuCount, Date date){
+    private void displayPromotionResult(MenuCount menuCount, Date date) {
         displayGiftEvent(menuCount);
         displayPromotionEvent(menuCount, date);
         displayTotalPromotionAmount(menuCount, date);
@@ -59,7 +59,7 @@ public class PromotionController {
         displayEventBadge(menuCount, date);
     }
 
-    private void displayEventGuideMessage(Date date){
+    private void displayEventGuideMessage(Date date) {
         OutputView.printEventGuideMessage(date.getValue());
     }
 
@@ -88,8 +88,8 @@ public class PromotionController {
     }
 
     private void displayExpectedPaymentAmount(MenuCount menuCount, Date date) {
-        int expectedPayment = menuCount.calculateTotalAmount()
-                - promotion.calaulateTotalDiscountAmount(menuCount, date);
+        int expectedPayment =
+                menuCount.calculateTotalAmount() - promotion.calaulateTotalDiscountAmount(menuCount, date);
         OutputView.printExpectedPaymentAmount(expectedPayment);
     }
 

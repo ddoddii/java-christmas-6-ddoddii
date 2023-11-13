@@ -42,7 +42,7 @@ public class OutputViewTest {
     void 주문메뉴_출력_테스트() {
         //given
         String input = "양송이수프-2,크리스마스파스타-2,바비큐립-1,레드와인-1";
-        Map<String,Integer> parsedMenu = Parser.parseMenuCount(input);
+        Map<String, Integer> parsedMenu = Parser.parseMenuCount(input);
         MenuCount menuCount = new MenuCount(parsedMenu);
 
         //when
@@ -113,7 +113,7 @@ public class OutputViewTest {
                     put(PromotionConstant.WEEKDAY_DISCOUNT, 4046);
                 }}, Set.of("<혜택 내역>", "크리스마스 디데이 할인: -1,200원", "평일 할인: -4,046원")),
                 Arguments.of(new EnumMap<PromotionConstant, Integer>(PromotionConstant.class) {{
-                    put(PromotionConstant.CHRISTMAS_DISCOUNT, 0 );
+                    put(PromotionConstant.CHRISTMAS_DISCOUNT, 0);
                     put(PromotionConstant.WEEKDAY_DISCOUNT, 0);
                 }}, Set.of("<혜택 내역>", "없음"))
         );

@@ -12,7 +12,7 @@ public class Application {
         DiscountStrategy discountStrategy = new WootecoDiscountStrategy();
         BadgeStrategy badgeStrategy = new WootecoBadgeStrategy();
         PromotionController promotionController = new PromotionController(
-                new PromotionService( discountStrategy, badgeStrategy)
+                new PromotionService(discountStrategy, badgeStrategy)
         );
 
         promotionController.run();

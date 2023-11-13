@@ -40,7 +40,7 @@ public class WootecoDiscountStrategy implements DiscountStrategy {
 
     @Override
     public int specialDayDiscount(Date date) {
-        if (date.isSpecialDate()) {
+        if (date.isSpecialDay()) {
             return SPECIAL_DAY_DISCOUNT.getAmount();
         }
         return NO_DISCOUNT.getAmount();

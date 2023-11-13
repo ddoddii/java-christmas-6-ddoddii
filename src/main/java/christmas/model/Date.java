@@ -44,7 +44,7 @@ public class Date {
         return XMAS.getDate() >= date;
     }
 
-    public boolean isSpecialDate() {
+    public boolean isSpecialDay() {
         return SPECIAL_DAYS.contains(date);
     }
 

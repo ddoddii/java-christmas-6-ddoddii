@@ -9,11 +9,12 @@ public enum PromotionConstant {
     GIFT_EVENT("증정 이벤트");
 
     private String name;
-    PromotionConstant(String name){
+
+    PromotionConstant(String name) {
         this.name = name;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 

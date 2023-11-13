@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 public class MenuValidator {
     private static final int MAX_MENU_AMOUNT = 20;
 
-
     //메뉴 입력 형식 검증
     public static void validateMenuInputFormat(String input) {
         validateMenuFormat(input);
@@ -29,7 +28,6 @@ public class MenuValidator {
         validateNotOnlyDrink(parsedMenu);
         validateAmountNotOverLimit(parsedMenu);
     }
-
 
     //메뉴 형식 {메뉴이름}-{메뉴수량} 에 맞지 않을 시 예외 발생
     private static void validateMenuFormat(String input) {
@@ -69,7 +67,8 @@ public class MenuValidator {
     }
 
     private static void validateNotOnlyDrink(Map<String, Integer> parsedMenu) {
-        boolean onlyDrinks = parsedMenu.keySet().stream()
+        boolean onlyDrinks = parsedMenu.keySet()
+                .stream()
                 .flatMap(menuName -> Arrays.stream(Menu.values())
                         .filter(menu -> menu.getName().equals(menuName))
                         .findFirst()
@@ -80,11 +79,12 @@ public class MenuValidator {
         }
     }
 
-    private static void validateAmountNotOverLimit(Map<String, Integer> parsedMenu){
-        int totalAmount = parsedMenu.values().stream()
+    private static void validateAmountNotOverLimit(Map<String, Integer> parsedMenu) {
+        int totalAmount = parsedMenu.values()
+                .stream()
                 .mapToInt(Integer::intValue)
                 .sum();
-        if (totalAmount > MAX_MENU_AMOUNT){
+        if (totalAmount > MAX_MENU_AMOUNT) {
             throw new MenuAmoutOverLimitException();
         }
     }

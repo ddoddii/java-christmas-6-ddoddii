@@ -9,7 +9,6 @@ public enum DiscountConstant {
     GIFT_EVENT_THRESHOLD(120000),
     NO_DISCOUNT(0);
 
-
     private int amount;
 
     DiscountConstant(int amount) {

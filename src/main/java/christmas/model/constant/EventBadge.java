@@ -4,9 +4,8 @@ public enum EventBadge {
     SANTA("산타", 20000),
     TREE("트리", 10000),
     STAR("별", 5000),
-    NOTHING("없음",0);
-
-
+    NOTHING("없음", 0);
+    
     private String name;
     private int baseAmount;
 
@@ -15,8 +14,7 @@ public enum EventBadge {
         this.baseAmount = baseAmount;
     }
 
-
-    public String getName(){
+    public String getName() {
         return name;
     }
 
