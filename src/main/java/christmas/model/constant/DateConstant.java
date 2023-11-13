@@ -27,9 +27,9 @@ public enum DateConstant {
             DayOfWeek day = date.getDayOfWeek();
             if (day == DayOfWeek.SATURDAY || day == DayOfWeek.FRIDAY) {
                 WEEKENDS.add(date.getDayOfMonth());
-            } else {
-                WEEKDAYS.add(date.getDayOfMonth());
+                continue;
             }
+            WEEKDAYS.add(date.getDayOfMonth());
         }
     }
 
