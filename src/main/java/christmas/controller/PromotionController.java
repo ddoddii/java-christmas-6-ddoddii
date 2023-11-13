@@ -25,7 +25,8 @@ public class PromotionController {
         Date date = getDate();
         MenuCount menuCount = getMenu();
         displayEventGuideMessage(date);
-        displayResult(menuCount, date);
+        displayMenuAndOrderAmount(menuCount);
+        displayPromotionResult(menuCount, date);
     }
 
 
@@ -45,9 +46,12 @@ public class PromotionController {
         });
     }
 
-    private void displayResult(MenuCount menuCount, Date date){
+    private void displayMenuAndOrderAmount(MenuCount menuCount){
         displayMenuInfo(menuCount);
         displayTotalOrderAmount(menuCount);
+    }
+
+    private void displayPromotionResult(MenuCount menuCount, Date date){
         displayGiftEvent(menuCount);
         displayPromotionEvent(menuCount, date);
         displayTotalPromotionAmount(menuCount, date);
