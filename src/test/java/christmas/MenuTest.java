@@ -26,7 +26,8 @@ public class MenuTest {
     })
     void 메뉴_형식_테스트(String strings){
         assertThatThrownBy(() -> MenuValidator.validateMenuInputFormat(strings))
-                .isInstanceOf(MenuFormatException.class);
+                .hasMessageContaining("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+
     }
 
     @DisplayName("중복 메뉴가 존재할 때 예외 발생")
@@ -34,7 +35,7 @@ public class MenuTest {
     @ValueSource(strings = {"초코케이크-1,바비큐립-2,초코케이크-3"})
     void 메뉴_중복_테스트(String strings){
         assertThatThrownBy(() -> MenuValidator.validateMenuInputFormat(strings))
-                .isInstanceOf(DuplicateMenuException.class);
+                .hasMessageContaining("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
 
     @DisplayName("메뉴 수량에 0이 존재할 때 예외 발생")
@@ -42,16 +43,16 @@ public class MenuTest {
     @ValueSource(strings = {"초코케이크-0,바비큐립-2","초코케이크-0"})
     void 메뉴_수량_0_테스트(String strings){
         assertThatThrownBy(() -> MenuValidator.validateMenuInputFormat(strings))
-                .isInstanceOf(MenuCountZeroException.class);
+                .hasMessageContaining("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
 
-    @DisplayName("메뉴에 존재하는 주문이 있을 때 예외 발생")
+    @DisplayName("메뉴에 존재하지 않는 주문이 있을 때 예외 발생")
     @ParameterizedTest
     @ValueSource(strings = {"바나나케이크-1,초코케이크-2","케이크-2,초코아이스크림-3"})
     void 메뉴_존재하지_않음_테스트(String strings){
         Map<String,Integer> parsedMenu = Parser.parseMenuCount(strings);
         assertThatThrownBy(() -> MenuValidator.validateMenuLogic(parsedMenu))
-                .isInstanceOf(MenuNotFoundException.class);
+                .hasMessageContaining("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
 
     @DisplayName("음료만 주문할 때 예외 발생")
@@ -60,7 +61,7 @@ public class MenuTest {
     void 음료만_주문_테스트(String strings){
         Map<String,Integer> parsedMenu = Parser.parseMenuCount(strings);
         assertThatThrownBy(() -> MenuValidator.validateMenuLogic(parsedMenu))
-                .isInstanceOf(OnlyDrinkException.class);
+                .hasMessageContaining("[ERROR] 음료만 주문할 수 없습니다. 다시 입력해 주세요.");
     }
 
     @DisplayName("총 주문 수량이 20개 초과일 시 예외 발생")
@@ -69,6 +70,6 @@ public class MenuTest {
     void 주문수량_20초과_테스트(String strings){
         Map<String,Integer> parsedMenu = Parser.parseMenuCount(strings);
         assertThatThrownBy(() -> MenuValidator.validateMenuLogic(parsedMenu))
-                .isInstanceOf(MenuAmoutOverLimitException.class);
+                .hasMessageContaining("[ERROR] 메뉴는 한 번에 최대 20개까지만 주문할 수 있습니다. 다시 입력해 주세요.");
     }
 }
