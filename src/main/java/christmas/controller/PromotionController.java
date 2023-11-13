@@ -78,7 +78,7 @@ public class PromotionController {
     }
 
     private void displayPromotionEvent(MenuCount menuCount, Date date) {
-        EnumMap<PromotionConstant, Integer> promotionStatus = promotion.getPromotionStatus(menuCount, date);
+        EnumMap<PromotionConstant, Integer> promotionStatus = promotion.calculatePromotionStatus(menuCount, date);
         OutputView.printPromotionStatus(promotionStatus);
     }
 

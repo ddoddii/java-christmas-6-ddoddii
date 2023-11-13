@@ -48,7 +48,7 @@ public class PromotionService {
         return NO_DISCOUNT.getAmount();
     }
 
-    public EnumMap<PromotionConstant, Integer> getPromotionStatus(MenuCount menuCount, Date date) {
+    public EnumMap<PromotionConstant, Integer> calculatePromotionStatus(MenuCount menuCount, Date date) {
         EnumMap<PromotionConstant, Integer> promotionStatus = new EnumMap<>(PromotionConstant.class);
         promotionStatus.put(CHRISTMAS_DISCOUNT, discountStrategy.christmasDiscount(date));
         promotionStatus.put(WEEKDAY_DISCOUNT, discountStrategy.weekdayDiscount(menuCount, date));
