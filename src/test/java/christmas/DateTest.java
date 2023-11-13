@@ -1,6 +1,8 @@
 package christmas;
 
 import static christmas.model.constant.DateConstant.SPECIAL_DAYS;
+import static christmas.model.constant.DateConstant.WEEKDAYS;
+import static christmas.model.constant.DateConstant.WEEKENDS;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import christmas.model.Date;
@@ -40,6 +42,12 @@ public class DateTest {
         Assertions.assertThat(testDate.isWeekend()).isFalse();
     }
 
+    @DisplayName("12월에 평일은 총 21일이다.")
+    @Test
+    void 평일개수_확인_테스트(){
+        Assertions.assertThat(WEEKDAYS).hasSize(21);
+    }
+
     @DisplayName("주말인지 확인한다.")
     @ParameterizedTest
     @ValueSource(ints = {1, 2, 8, 9, 15, 16, 22, 23, 29, 30})
@@ -49,6 +57,12 @@ public class DateTest {
         // then
         Assertions.assertThat(testDate.isWeekend()).isTrue();
         Assertions.assertThat(testDate.isWeekday()).isFalse();
+    }
+
+    @DisplayName("12월에 주말은 총 10일이다.")
+    @Test
+    void 주말개수_확인_테스트(){
+        Assertions.assertThat(WEEKENDS).hasSize(10);
     }
 
     @DisplayName("특별한 날짜인지 확인한다.")
