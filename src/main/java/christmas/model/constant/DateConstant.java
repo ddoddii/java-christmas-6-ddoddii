@@ -11,12 +11,10 @@ public enum DateConstant {
     MAX_DATE(31),
     XMAS(25);
 
-    private int date;
     public static final Set<Integer> WEEKDAYS = new HashSet<>();
     public static final Set<Integer> WEEKENDS = new HashSet<>();
-
     public static final Set<Integer> SPECIAL_DAYS = new HashSet<>(Arrays.asList(
-            3, 10, 17, 24, 31
+            3, 10, 17, 24, 25, 31
     ));
 
     static {
@@ -32,6 +30,8 @@ public enum DateConstant {
             WEEKDAYS.add(date.getDayOfMonth());
         }
     }
+
+    private final int date;
 
     DateConstant(int date) {
         this.date = date;
