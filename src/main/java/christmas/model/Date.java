@@ -1,5 +1,10 @@
 package christmas.model;
 
+import static christmas.model.constant.DateConstant.SPECIAL_DAYS;
+import static christmas.model.constant.DateConstant.WEEKDAYS;
+import static christmas.model.constant.DateConstant.WEEKENDS;
+import static christmas.model.constant.DateConstant.XMAS;
+
 import christmas.model.constant.DateConstant;
 import christmas.exception.date.DateRangeException;
 
@@ -28,19 +33,20 @@ public class Date {
     }
 
     public boolean isWeekday() {
-        return DateConstant.isWeekday(date);
+        return WEEKDAYS.contains(date);
     }
 
     public boolean isWeekend() {
-        return DateConstant.isWeekend(date);
+        return WEEKENDS.contains(date);
     }
 
     public boolean isBeforeXmas() {
-        return DateConstant.isBeforeXmas(date);
+        return XMAS.getDate() >= date;
     }
 
     public boolean isSpecialDate() {
-        return DateConstant.isSpecialDay(date);
+        return SPECIAL_DAYS.contains(date);
     }
+
 
 }
