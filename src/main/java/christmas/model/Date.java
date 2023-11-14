@@ -1,12 +1,12 @@
 package christmas.model;
 
+import static christmas.exception.CustomException.DATE_RANGE_EXCEPTION;
 import static christmas.model.constant.DateConstant.SPECIAL_DAYS;
 import static christmas.model.constant.DateConstant.WEEKDAYS;
 import static christmas.model.constant.DateConstant.WEEKENDS;
 import static christmas.model.constant.DateConstant.XMAS;
 
 import christmas.model.constant.DateConstant;
-import christmas.exception.date.DateRangeException;
 
 public class Date {
     private final int MIN_DATE = DateConstant.MIN_DATE.getDate();
@@ -28,7 +28,7 @@ public class Date {
 
     private void validateDateRange(int date) {
         if (date < MIN_DATE || date > MAX_DATE) {
-            throw new DateRangeException();
+            throw DATE_RANGE_EXCEPTION;
         }
     }
 

@@ -1,11 +1,12 @@
 package christmas.validator;
 
-import christmas.exception.menu.DuplicateMenuException;
-import christmas.exception.menu.MenuAmoutOverLimitException;
-import christmas.exception.menu.MenuCountZeroException;
-import christmas.exception.menu.MenuFormatException;
-import christmas.exception.menu.MenuNotFoundException;
-import christmas.exception.menu.OnlyDrinkException;
+import static christmas.exception.CustomException.DUPLICATE_MENU_EXCEPTION;
+import static christmas.exception.CustomException.MENU_AMOUNT_OVER_LIMIT_EXCEPTION;
+import static christmas.exception.CustomException.MENU_COUNT_ZERO_EXCEPTION;
+import static christmas.exception.CustomException.MENU_FORMAT_EXCEPTION;
+import static christmas.exception.CustomException.MENU_NOT_FOUND_EXCEPTION;
+import static christmas.exception.CustomException.ONLY_DRINK_EXCEPTION;
+
 import christmas.model.constant.Menu;
 import java.util.Arrays;
 import java.util.Map;
@@ -34,7 +35,7 @@ public class MenuValidator {
         String pattern = "([가-힣a-zA-Z]+-\\d+)(,[가-힣a-zA-Z]+-\\d+)*";
 
         if (!input.matches(pattern)) {
-            throw new MenuFormatException();
+            throw MENU_FORMAT_EXCEPTION;
         }
     }
 
@@ -43,7 +44,7 @@ public class MenuValidator {
                 .map(item -> item.split("-")[0])
                 .collect(Collectors.toSet());
         if (menuNames.size() != input.split(",").length) {
-            throw new DuplicateMenuException();
+            throw DUPLICATE_MENU_EXCEPTION;
         }
     }
 
@@ -52,7 +53,7 @@ public class MenuValidator {
                 .map(item -> item.split("-")[1])
                 .collect(Collectors.toSet());
         if (menuCounts.contains("0")) {
-            throw new MenuCountZeroException();
+            throw MENU_COUNT_ZERO_EXCEPTION;
         }
     }
 
@@ -61,7 +62,7 @@ public class MenuValidator {
             boolean menuExists = Arrays.stream(Menu.values())
                     .anyMatch(menu -> menu.getName().equals(menuName));
             if (!menuExists) {
-                throw new MenuNotFoundException();
+                throw MENU_NOT_FOUND_EXCEPTION;
             }
         });
     }
@@ -75,7 +76,7 @@ public class MenuValidator {
                         .stream())
                 .allMatch(menu -> "음료".equals(menu.getCategory()));
         if (onlyDrinks) {
-            throw new OnlyDrinkException();
+            throw ONLY_DRINK_EXCEPTION;
         }
     }
 
@@ -85,7 +86,7 @@ public class MenuValidator {
                 .mapToInt(Integer::intValue)
                 .sum();
         if (totalAmount > MAX_MENU_AMOUNT) {
-            throw new MenuAmoutOverLimitException();
+            throw MENU_AMOUNT_OVER_LIMIT_EXCEPTION;
         }
     }
 }

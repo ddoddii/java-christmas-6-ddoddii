@@ -1,6 +1,7 @@
 package christmas.util;
 
-import christmas.exception.date.DateNotIntegerException;
+import static christmas.exception.CustomException.DATE_NOT_INTEGER_EXCEPTION;
+
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -10,7 +11,7 @@ public class Parser {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new DateNotIntegerException();
+            throw DATE_NOT_INTEGER_EXCEPTION;
         }
     }
 
