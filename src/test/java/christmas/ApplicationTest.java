@@ -4,6 +4,7 @@ import static camp.nextstep.edu.missionutils.test.Assertions.assertSimpleTest;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import camp.nextstep.edu.missionutils.test.NsTest;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ApplicationTest extends NsTest {
@@ -50,7 +51,7 @@ class ApplicationTest extends NsTest {
     }
 
     // 테스트 추가
-
+    @DisplayName("주문 메뉴, 혜택, 결제 금액 계산 테스트")
     @Test
     void 주문메뉴_혜택_결제금액_테스트(){
         assertSimpleTest(() -> {
@@ -75,6 +76,30 @@ class ApplicationTest extends NsTest {
                     "166,731원",
                     "<12월 이벤트 배지>",
                     "산타"
+            );
+        });
+    }
+    @DisplayName("총 주문 금액 만원 이하일 때는 이벤트를 적용하지 않는다.")
+    @Test
+    void 만원이하_주문메뉴_혜택_결제금액_테스트(){
+        assertSimpleTest(() -> {
+            run("23", "양송이수프-1,제로콜라-1");
+            assertThat(output()).contains(
+                    "<주문 메뉴>",
+                    "양송이수프 1개",
+                    "제로콜라 1개",
+                    "<할인 전 총주문 금액>",
+                    "9,000원",
+                    "<증정 메뉴>",
+                    "없음",
+                    "<혜택 내역>",
+                    "없음",
+                    "<총혜택 금액>",
+                    "0원",
+                    "<할인 후 예상 결제 금액>",
+                    "9,000원",
+                    "<12월 이벤트 배지>",
+                    "없음"
             );
         });
     }
