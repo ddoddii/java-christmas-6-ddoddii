@@ -1,8 +1,14 @@
-package christmas;
+package christmas.view;
 
 
+import static christmas.PromotionTest.makeMenuCount;
+
+import christmas.model.Date;
 import christmas.model.MenuCount;
 import christmas.model.constant.PromotionConstant;
+import christmas.model.strategy.WootecoBadgeStrategy;
+import christmas.model.strategy.WootecoDiscountStrategy;
+import christmas.service.PromotionService;
 import christmas.util.Parser;
 import christmas.view.OutputView;
 import java.io.ByteArrayOutputStream;
@@ -116,6 +122,31 @@ public class OutputViewTest {
                     put(PromotionConstant.CHRISTMAS_DISCOUNT, 0);
                     put(PromotionConstant.WEEKDAY_DISCOUNT, 0);
                 }}, Set.of("<혜택 내역>", "없음"))
+        );
+    }
+
+    @DisplayName("총주문 금액이 10,000원 미만이면 혜택 내역이 없음으로 출력된다.")
+    @ParameterizedTest
+    @MethodSource("provideInputForPromotionStatus")
+    void 총주문_10000원이하_혜택내역_출력_테스트(int inputDate, String input, Set<String> expectedOutput) {
+        //given
+        Date date = Date.of(inputDate);
+        MenuCount menuCount = makeMenuCount(input);
+        PromotionService promotionService =
+                new PromotionService(new WootecoDiscountStrategy(), new WootecoBadgeStrategy());
+        EnumMap<PromotionConstant, Integer> promotionStatus = promotionService.calculatePromotionStatus(menuCount, date);
+        // then
+        OutputView.printPromotionStatus(promotionStatus);
+        // then
+        Set<String> actualOutputs = Arrays.stream(outputMessage.toString().split("\n"))
+                .collect(Collectors.toSet());
+        Assertions.assertThat(actualOutputs).containsAll(expectedOutput);
+    }
+
+    private static Stream<Arguments> provideInputForPromotionStatus() {
+        return Stream.of(
+                Arguments.of(3,"제로콜라-1,아이스크림-1" ,Set.of("<혜택 내역>", "없음")),
+                Arguments.of(3, "제로콜라-1,타파스-1",Set.of("<혜택 내역>", "없음")) // Case for null promotionStatus
         );
     }
 
