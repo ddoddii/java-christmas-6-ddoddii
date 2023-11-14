@@ -50,11 +50,14 @@ public class PromotionService {
 
     public EnumMap<PromotionConstant, Integer> calculatePromotionStatus(MenuCount menuCount, Date date) {
         EnumMap<PromotionConstant, Integer> promotionStatus = new EnumMap<>(PromotionConstant.class);
-        promotionStatus.put(CHRISTMAS_DISCOUNT, discountStrategy.christmasDiscount(date));
-        promotionStatus.put(WEEKDAY_DISCOUNT, discountStrategy.weekdayDiscount(menuCount, date));
-        promotionStatus.put(WEEKEND_DISCOUNT, discountStrategy.weekendDiscount(menuCount, date));
-        promotionStatus.put(SPECIAL_DISCOUNT, discountStrategy.specialDayDiscount(date));
-        promotionStatus.put(GIFT_EVENT, discountStrategy.giftEventDiscount(menuCount));
+        if (canGetDiscount(menuCount)) {
+            promotionStatus.put(CHRISTMAS_DISCOUNT, discountStrategy.christmasDiscount(date));
+            promotionStatus.put(WEEKDAY_DISCOUNT, discountStrategy.weekdayDiscount(menuCount, date));
+            promotionStatus.put(WEEKEND_DISCOUNT, discountStrategy.weekendDiscount(menuCount, date));
+            promotionStatus.put(SPECIAL_DISCOUNT, discountStrategy.specialDayDiscount(date));
+            promotionStatus.put(GIFT_EVENT, discountStrategy.giftEventDiscount(menuCount));
+            return promotionStatus;
+        }
         return promotionStatus;
     }
 
