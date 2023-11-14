@@ -1,4 +1,4 @@
-package christmas;
+package christmas.model;
 
 import christmas.model.MenuCount;
 import christmas.util.Parser;

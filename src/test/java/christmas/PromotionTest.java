@@ -144,11 +144,6 @@ public class PromotionTest {
                 .isEqualTo(expectedAmount);
     }
 
-    private MenuCount makeMenuCount(String input) {
-        Map<String, Integer> parsedMenu = Parser.parseMenuCount(input);
-        return new MenuCount(parsedMenu);
-    }
-
     @DisplayName("총 혜택 금액에 따라 배지를 부여한다.")
     @ParameterizedTest
     @CsvSource({
@@ -165,6 +160,11 @@ public class PromotionTest {
         Assertions.assertThat(badgeName)
                 .isEqualTo(expectedBadgeName);
         ;
+    }
+
+    public static MenuCount makeMenuCount(String input) {
+        Map<String, Integer> parsedMenu = Parser.parseMenuCount(input);
+        return new MenuCount(parsedMenu);
     }
 
 

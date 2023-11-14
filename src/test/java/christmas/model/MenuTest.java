@@ -1,4 +1,4 @@
-package christmas;
+package christmas.model;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

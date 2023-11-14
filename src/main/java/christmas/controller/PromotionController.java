@@ -29,13 +29,11 @@ public class PromotionController {
         displayPromotionResult(menuCount, date);
     }
 
-
     private Date getDate() {
         return executeWithExceptionHandle(() -> {
             int inputDate = InputView.readDate();
             return Date.of(inputDate);
         });
-
     }
 
     private MenuCount getMenu() {

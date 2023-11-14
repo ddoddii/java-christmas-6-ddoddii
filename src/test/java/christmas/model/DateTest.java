@@ -1,4 +1,4 @@
-package christmas;
+package christmas.model;
 
 import static christmas.model.constant.DateConstant.SPECIAL_DAYS;
 import static christmas.model.constant.DateConstant.WEEKDAYS;
