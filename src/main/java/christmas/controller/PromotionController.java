@@ -5,6 +5,10 @@ import static christmas.model.constant.DiscountConstant.GIFT_EVENT_THRESHOLD;
 import christmas.model.Date;
 import christmas.model.MenuCount;
 import christmas.model.constant.PromotionConstant;
+import christmas.model.strategy.BadgeStrategy;
+import christmas.model.strategy.DiscountStrategy;
+import christmas.model.strategy.WootecoBadgeStrategy;
+import christmas.model.strategy.WootecoDiscountStrategy;
 import christmas.service.PromotionService;
 import christmas.util.Parser;
 import christmas.view.InputView;
@@ -15,9 +19,11 @@ import java.util.function.Supplier;
 
 public class PromotionController {
     private final PromotionService promotion;
+    private final DiscountStrategy discountStrategy = new WootecoDiscountStrategy();
+    private final BadgeStrategy badgeStrategy = new WootecoBadgeStrategy();
 
-    public PromotionController(PromotionService promotionService) {
-        this.promotion = promotionService;
+    public PromotionController() {
+        this.promotion = new PromotionService(discountStrategy, badgeStrategy);
     }
 
     public void run() {
