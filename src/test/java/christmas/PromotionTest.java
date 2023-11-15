@@ -99,6 +99,22 @@ public class PromotionTest {
         Assertions.assertThat(expectedDiscount).isEqualTo(25000);
     }
 
+    @DisplayName("총 혜택 금액 별 배지 등급이 다르게 부여된다.")
+    @ParameterizedTest
+    @CsvSource({
+            "20000, '산타'",
+            "10000, '트리'",
+            "5000, '별'",
+            "3000, '없음'"
+    })
+    void 배지_등급_테스트(int promotionAmount, String expectedBadgeName) {
+        // when
+        String actualBadgeName = badgeStrategy.calculateBadgeGrade(promotionAmount).getName();
+        // then
+        Assertions.assertThat(actualBadgeName).isEqualTo(expectedBadgeName);
+    }
+
+
     @DisplayName("총할인 금액을 계산한다.")
     @ParameterizedTest
     @CsvSource({
