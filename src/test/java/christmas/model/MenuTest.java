@@ -55,7 +55,7 @@ public class MenuTest {
     void 음료만_주문_테스트(String strings) {
         Map<String, Integer> parsedMenu = Parser.parseMenuCount(strings);
         assertThatThrownBy(() -> MenuValidator.validateMenuLogic(parsedMenu))
-                .hasMessageContaining("[ERROR] 음료만 주문할 수 없습니다. 다시 입력해 주세요.");
+                .hasMessageContaining("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
 
     @DisplayName("총 주문 수량이 20개 초과일 시 예외 발생")
@@ -64,6 +64,6 @@ public class MenuTest {
     void 주문수량_20초과_테스트(String strings) {
         Map<String, Integer> parsedMenu = Parser.parseMenuCount(strings);
         assertThatThrownBy(() -> MenuValidator.validateMenuLogic(parsedMenu))
-                .hasMessageContaining("[ERROR] 메뉴는 한 번에 최대 20개까지만 주문할 수 있습니다. 다시 입력해 주세요.");
+                .hasMessageContaining("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
     }
 }
